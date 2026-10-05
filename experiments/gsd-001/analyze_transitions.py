@@ -24,6 +24,15 @@ def load_control_map(path: str | None) -> dict[str, bool]:
     return {str(k): bool(v) for k, v in data.items()}
 
 
+def load_pair_control_map(path: str | None) -> dict[str, bool]:
+    if path is None:
+        return {}
+    data = json.loads(Path(path).read_text(encoding="utf-8"))
+    if not isinstance(data, dict):
+        raise ValueError("pair-control JSON must map from->to revision keys to booleans")
+    return {str(k): bool(v) for k, v in data.items()}
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("run_root")
@@ -33,12 +42,18 @@ def main() -> None:
     parser.add_argument(
         "--control-json",
         default=None,
-        help="JSON object mapping exact revisions to stable-control pass/fail.",
+        help="Legacy JSON object mapping exact revisions to stable-control pass/fail.",
+    )
+    parser.add_argument(
+        "--pair-control-json",
+        default=None,
+        help="JSON object mapping exact from_revision->to_revision pairs to stable-control pass/fail.",
     )
     parser.add_argument("--output", required=True)
     args = parser.parse_args()
 
     control_map = load_control_map(args.control_json)
+    pair_control_map = load_pair_control_map(args.pair_control_json)
     root = Path(args.run_root)
     summaries: list[CheckpointSummary] = []
     section = "tasks" if args.task else "families"
@@ -64,18 +79,33 @@ def main() -> None:
         )
 
     reversals = detect_state_reversals(summaries)
-    candidates = detect_candidate_transitions(summaries)
+    if pair_control_map:
+        for reversal in reversals:
+            pair_key = f"{reversal['from_revision']}->{reversal['to_revision']}"
+            reversal["control_validated"] = bool(pair_control_map.get(pair_key, False))
+            if reversal["control_validated"]:
+                reversal["status"] = "CANDIDATE_TRANSITION"
+        candidates = [dict(r) for r in reversals if r["control_validated"]]
+    else:
+        candidates = detect_candidate_transitions(summaries)
     result = {
         "target_type": "task" if args.task else "family_aggregate",
         "target": key,
         "checkpoint_count": len(summaries),
-        "control_evidence_provided": args.control_json is not None,
+        "control_evidence_provided": (
+            args.control_json is not None or args.pair_control_json is not None
+        ),
+        "control_evidence_mode": (
+            "pair" if args.pair_control_json is not None
+            else "revision" if args.control_json is not None
+            else "none"
+        ),
         "state_reversals": reversals,
         "candidate_transitions": candidates,
         "claim_boundary": (
-            "A state reversal is not a candidate transition until both endpoint "
-            "checkpoints have explicit stable-control evidence. WP03 validation "
-            "is still required after candidate promotion."
+            "A state reversal is not a candidate transition until its checkpoint "
+            "pair has explicit stable-control evidence. WP03 validation is still "
+            "required after candidate promotion."
         ),
     }
     out = Path(args.output)
