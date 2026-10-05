@@ -22,12 +22,13 @@ class SpanScore:
 def resolve_answer_start(tokenizer: Any, prompt: str, answer: str) -> tuple[list[int], int, str]:
     """Resolve an exact continuation boundary for teacher-forced scoring.
 
-    Prefer the public runner canonical full-text tokenization when the
-    tokenization of prompt plus one space is a true prefix. If tokenization
-    merges across that boundary, force the boundary explicitly by tokenizing
-    the prompt and the leading-space answer continuation separately and
-    concatenating their token IDs. The caller must pass the returned token IDs
-    directly to the model; re-tokenizing the full text invalidates this contract.
+    Prefer canonical full-text tokenization when tokenizing ``prompt + " "``
+    is a true prefix. If the tokenizer merges across that boundary, force the
+    continuation boundary by tokenizing the prompt and leading-space answer
+    separately and concatenating their token IDs.
+
+    Callers must pass the returned token IDs directly to the model. Re-tokenizing
+    the reconstructed text would invalidate the forced-boundary contract.
     """
     full_text = prompt + " " + answer
     prefix_ids = tokenizer.encode(prompt + " ", add_special_tokens=False)
@@ -39,10 +40,8 @@ def resolve_answer_start(tokenizer: Any, prompt: str, answer: str) -> tuple[list
     continuation_ids = tokenizer.encode(" " + answer, add_special_tokens=False)
     if not continuation_ids:
         raise ValueError("answer continuation tokenized to an empty sequence")
-
     forced_ids = list(prompt_ids) + list(continuation_ids)
     return forced_ids, len(prompt_ids), "forced_separate_continuation"
-
 
 def span_score_from_token_logprobs(logps: Iterable[float]) -> SpanScore:
     values = [float(x) for x in logps]
