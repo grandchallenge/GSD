@@ -5,9 +5,9 @@ issue: 1
 branch: "main"
 protected_plan: "governance/GSD-001_RESEARCH_PROGRAMME.md"
 scope: ["GSD-WP00", "GSD-WP01", "GSD-WP02", "GSD-WP03"]
-state: "WP03_V1_BOUNDARY_RISK__WP03R_ACTIVE"
-current_frontier: "WP03R_EXACT_BOUNDARY_REPLAY"
-next_action: "Complete the frozen WP03R exact-boundary replay on L4 and adjudicate the three Truthy candidates under the unchanged prompt/replay/control gates."
+state: "G1_OPEN__WP03R_CLOSED"
+current_frontier: "G1_UNLOCKED_WP04_WP05_WP06"
+next_action: "Enter the G1-unlocked tranche. First determine WP04 optimizer-artifact availability; if unavailable, execute WP05 mechanistic/operator localization and WP06 recovery/Residual tests on the confirmed surprising_truth transition localized to steps 2000-3000."
 completion_gates:
   WP00:
     - "exact external source identities recorded"
@@ -161,9 +161,36 @@ wp03r:
   source_commit: "c7dccf39353a0c9094e18d1d475b82411b33f4af"
   accelerator: "L4"
   run_id: "20261005T090911Z-396"
-  state: "RUNNING"
+  state: "GREEN"
   boundary_contract:
     canonical_mode: "stable_prompt_space"
     repair_mode: "forced_separate_continuation"
     exact_token_ids_to_vllm: true
     retokenization_forbidden: true
+
+wp03r_result:
+  receipt: "experiments/gsd-001/receipts/WP03R_TRUTHY_EXACT_BOUNDARY_L4_RECEIPT.md"
+  engineering_status: "GREEN_ENGINEERING"
+  gate_g1: "OPEN"
+  confirmed_transitions:
+    - task: "truthy_answer/surprising_truth"
+      from_step: 2000
+      from_state: "GENERALIZING"
+      to_step: 4000
+      to_state: "PATTERN_MATCHING"
+      localized_interval: "2000_to_3000"
+      independent_replay_support: "4/4"
+      prompt_variant_support: "3/3"
+      stable_controls: true
+      exact_boundary: true
+      disposition: "CONFIRMED_TRANSITION"
+  unconfirmed_candidates:
+    - task: "truthy_answer/surprising_truth"
+      from_step: 0
+      to_step: 2000
+      disposition: "PROMPT_SENSITIVE_UNCONFIRMED"
+    - task: "truthy_answer/common_misconception"
+      from_step: 0
+      to_step: 2000
+      disposition: "PROMPT_SENSITIVE_UNCONFIRMED"
+  unlocked_work_packages: ["GSD-WP04", "GSD-WP05", "GSD-WP06"]
