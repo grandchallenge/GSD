@@ -57,6 +57,10 @@ def main() -> int:
         "--pair-controls",
         default=str(HERE / "evidence" / "WP02_STABLE_CONTROLS" / "pair_controls.json"),
     )
+    p.add_argument(
+        "--protocol",
+        default="experiments/gsd-001/WP03_PROTOCOL.md",
+    )
     args = p.parse_args()
 
     root = Path(args.output_dir)
@@ -138,7 +142,7 @@ def main() -> int:
         }
 
     result = {
-        "protocol": "experiments/gsd-001/WP03_PROTOCOL.md",
+        "protocol": args.protocol,
         "checkpoint_count": len(summaries),
         "seeds": args.seeds,
         "variants": args.variants,
