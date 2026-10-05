@@ -183,6 +183,13 @@ def main() -> int:
                 "--max-eval", str(int(job.get("max_eval", 128))),
                 "--protocol", "experiments/gsd-001/WP06_R0_PROTOCOL.md",
             ]
+        elif workload == "gsd_wp06_r1_activation_recovery":
+            argv = [
+                sys.executable, str(source / "run_wp06_r1_activation.py"),
+                "--output-dir", str(run_root),
+                "--max-eval", str(int(job.get("max_eval", 128))),
+                "--batch-size", str(int(job.get("batch_size", 2))),
+            ]
         else:
             families = list(job.get("families", ["intuitive_answer"]))
             if not families:
