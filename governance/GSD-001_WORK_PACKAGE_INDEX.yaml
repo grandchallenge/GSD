@@ -2,7 +2,7 @@ schema_version: "0.1.0"
 programme_id: "GSD-001"
 title: "Generalization-State Dynamics"
 status: "planned"
-governing_issue: 139
+governing_issue: 1
 agenda: "governance/GSD-001_RESEARCH_PROGRAMME.md"
 plan: "governance/GSD-001_RESEARCH_PROGRAMME.md"
 default_execution_order:
