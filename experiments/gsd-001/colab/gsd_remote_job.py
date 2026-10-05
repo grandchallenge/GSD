@@ -144,7 +144,7 @@ def main() -> int:
 
         if workload == "gsd_wp02_stable_controls":
             argv = [
-                sys.executable, str(source / "run_controls.py"),
+                sys.executable, str(source / "run_controls_batch.py"),
                 "--output-dir", str(run_root),
                 "--max-eval", str(int(job.get("max_eval", 128))),
                 "--sentiment-demo-k", str(int(job.get("sentiment_demo_k", 16))),
