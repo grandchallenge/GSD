@@ -1,0 +1,72 @@
+schema_version: "0.1.0"
+campaign: "GSD-001"
+tranche: "GSD-TRANCHE-A"
+issue: 1
+branch: "main"
+protected_plan: "governance/GSD-001_RESEARCH_PROGRAMME.md"
+scope: ["GSD-WP00", "GSD-WP01", "GSD-WP02", "GSD-WP03"]
+state: "WP01_CLOSED__WP02_ACTIVE"
+current_frontier: "WP02_PAPER_PROBE_EXPANSION"
+next_action: "Run the frozen L4 paper-probe expansion in compute order: truthy_answer, successive_answer, repetitive_answer, flipped_answer; catalogue task-level reversals after each family."
+completion_gates:
+  WP00:
+    - "exact external source identities recorded"
+    - "golden fixture replay green"
+    - "token-boundary audit tests green"
+  WP01:
+    - "at least 20 exact model revisions completed on accelerator"
+    - "model and dataset resolved commit SHAs captured"
+    - "per-item result traces preserved"
+  WP02:
+    - "soft-margin checkpoint summaries produced"
+    - "candidate transition catalogue produced"
+  WP03:
+    - "candidate transitions attacked under prompt/threshold/token-boundary variants"
+    - "surviving transitions receive CONFIRMED_TRANSITION or candidates are falsified"
+claim_firewall:
+  - "no transition claim from infrastructure-only tests"
+  - "no mechanism claim"
+  - "capacity allocation remains a hypothesis"
+  - "hard accuracy is secondary to soft margin"
+  - "no 7B/32B escalation before G1"
+stop_conditions:
+  - "accelerator execution surface unavailable after implementation/CI is complete"
+  - "external artifact cannot be resolved by exact identity"
+  - "validation failure requiring substantive redesign"
+
+colab_execution:
+  architecture: "GCL host-orchestrated Colab lifecycle reused from QUANTUM-TECHNOLOGIES"
+  adapter: "experiments/gsd-001/colab/gsd_remote_job.py"
+  payload_builder: "experiments/gsd-001/colab/build_payload.py"
+  host_launcher: "experiments/gsd-001/colab/run_wp01_colab.sh"
+  frozen_job: "experiments/gsd-001/colab/jobs/wp01_olmo2_1b_crt_coarse20_t4.json"
+  requested_accelerator: "T4"
+  checkpoint_count: 20
+  checkpoint_design: "steps 0,2000,...,36000 plus terminal flank 35000"
+  host_cli_observed: "google-colab-cli 0.7.4"
+  qtr_documented_cli: "google-colab-cli 0.6.0"
+  cli_compatibility_note: "Lifecycle primitives new/upload/exec/download/log/stop remain available; version drift must be receipted."
+  launch_state: "MIGRATED_TO_GSD"
+  launch_blocker: null
+
+wp01_closure:
+  receipt: "experiments/gsd-001/receipts/WP01_L4_RECEIPT.md"
+  experiment_id: "GSD-WP01-OLMO2-1B-CRT-COARSE20-L4-001"
+  source_commit: "db4abac3bc6bdeeafdd0698ab72098ff5902baa8"
+  status: "GREEN_ENGINEERING"
+  hardware: "NVIDIA L4"
+  checkpoint_count: 20
+  summary_count: 20
+  crt_state_reversals: 0
+  crt_candidate_transitions: 0
+
+wp02_expansion:
+  execution_order:
+    - "truthy_answer"
+    - "successive_answer"
+    - "repetitive_answer"
+    - "flipped_answer"
+  rationale: "Compute-ordered by number of underlying paired-answer tasks; task-level summaries remain primary."
+  primary_accelerator: "L4"
+  fallback_accelerator: "A100"
+  stop_rule: "After each family, catalogue exact task-level state reversals. A reversal still requires stable-control evidence before candidate promotion."

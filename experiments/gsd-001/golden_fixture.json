@@ -1,0 +1,23 @@
+{
+  "description": "Pure score-arithmetic fixture; no model claim.",
+  "cases": [
+    {
+      "id": "generalizing-a",
+      "intelligence_logps": [-0.2, -0.3],
+      "parrot_logps": [-1.0, -0.8],
+      "expected_sum_margin": 1.3
+    },
+    {
+      "id": "generalizing-b",
+      "intelligence_logps": [-0.1],
+      "parrot_logps": [-0.9],
+      "expected_sum_margin": 0.8
+    },
+    {
+      "id": "pattern-a",
+      "intelligence_logps": [-1.4],
+      "parrot_logps": [-0.2],
+      "expected_sum_margin": -1.2
+    }
+  ]
+}

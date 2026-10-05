@@ -1,0 +1,30 @@
+schema_version: "0.1.0"
+programme: "GSD-001"
+recorded: "2026-10-04"
+paper:
+  title: "Generalization Dynamics of LM Pre-training"
+  authors: ["Jiaxin Wen", "Zhengxuan Wu", "Dawn Song", "Lijie Chen"]
+  arxiv: "2609.33150v1"
+  submitted: "2026-09-27"
+upstream_code:
+  repository: "Jiaxin-Wen/GDsuite"
+  commit: "e3f5de327cd90a579e50a89f04fa167c584b799f"
+  files:
+    README.md: "e6a336fb540d6b47cd5cc34f495eafa8fd53a115"
+    config.yaml: "4b91818725ba025e95f4bf73397cdc8e76e5bf59"
+    run_eval.py: "cf73f27027654e5c76edb038f743fbeed5e801e8"
+  usage: "behavioural/evaluation contract only; implementation here is independent"
+dataset:
+  repository: "jiaxin-wen/generalization-dynamics-evals"
+  license: "cc-by-4.0"
+  expected_rows: 22646
+  exact_revision_rule: "resolve HfApi.dataset_info(...).sha at run time and record in manifest"
+model_series:
+  repository: "allenai/OLMo-2-0425-1B-early-training"
+  license: "apache-2.0"
+  expected_checkpoint_cadence: "every 1000 steps from step0 through step36000 (37 public revisions observed 2026-10-04)"
+  exact_revision_rule: "enumerate HfApi.list_repo_refs and resolve each model_info SHA"
+claim_boundary: >
+  These sources define external behavioural probes and public checkpoint/data
+  identities. They do not establish a GCL transition, mechanism, or causal
+  explanation. GCL results require independent execution and preserved receipts.

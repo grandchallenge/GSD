@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "experiment_id": "GSD-WP02-OLMO2-1B-REPETITIVE-COARSE20-L4-001",
+  "workload": "gsd_wp02_probe_sweep",
+  "resource": {
+    "variant": "GPU",
+    "accelerator": "L4"
+  },
+  "remote_timeout_seconds": 10800,
+  "scientific_backend": "vllm_locked_gdsuite",
+  "scientific_execution_authorized": true,
+  "max_eval": 128,
+  "revisions": [
+    "stage1-step0-tokens0B",
+    "stage1-step2000-tokens5B",
+    "stage1-step4000-tokens9B",
+    "stage1-step6000-tokens13B",
+    "stage1-step8000-tokens17B",
+    "stage1-step10000-tokens21B",
+    "stage1-step12000-tokens26B",
+    "stage1-step14000-tokens30B",
+    "stage1-step16000-tokens34B",
+    "stage1-step18000-tokens38B",
+    "stage1-step20000-tokens42B",
+    "stage1-step22000-tokens47B",
+    "stage1-step24000-tokens51B",
+    "stage1-step26000-tokens55B",
+    "stage1-step28000-tokens59B",
+    "stage1-step30000-tokens63B",
+    "stage1-step32000-tokens68B",
+    "stage1-step34000-tokens72B",
+    "stage1-step35000-tokens74B",
+    "stage1-step36000-tokens76B"
+  ],
+  "claim_boundary": {
+    "behavioural_evidence_only": true,
+    "mechanism_claim": false,
+    "promotion_authorized": false,
+    "candidate_transition_requires_stable_controls": true,
+    "wp03_required_for_confirmation": true
+  },
+  "families": [
+    "repetitive_answer"
+  ],
+  "n_seeds": 1,
+  "task_count": 7
+}

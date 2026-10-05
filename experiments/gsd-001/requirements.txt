@@ -1,0 +1,8 @@
+numpy>=1.26,<3
+torch>=2.4
+transformers>=4.53.2
+huggingface_hub>=0.25
+datasets>=3
+pyyaml>=6
+vllm>=0.6
+wandb>=0.18

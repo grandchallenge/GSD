@@ -1,0 +1,102 @@
+schema_version: "0.1.0"
+programme_id: "GSD-001"
+title: "Generalization-State Dynamics"
+status: "planned"
+governing_issue: 139
+agenda: "governance/GSD-001_RESEARCH_PROGRAMME.md"
+plan: "governance/GSD-001_RESEARCH_PROGRAMME.md"
+default_execution_order:
+  - GSD-WP00
+  - GSD-WP01
+  - GSD-WP02
+  - GSD-WP03
+  - GSD-WP06
+  - GSD-WP05
+  - GSD-WP04
+  - GSD-WP07
+  - GSD-WP08
+  - GSD-WP09
+  - GSD-WP10
+  - GSD-WP11
+  - GSD-WP12
+work_packages:
+  GSD-WP00:
+    title: "Source lock and evaluator fidelity"
+    compute: low
+    dependencies: []
+    exit: "independent golden-fixture replay"
+  GSD-WP01:
+    title: "1B checkpoint harness"
+    compute: low
+    dependencies: [GSD-WP00]
+    exit: "20+ checkpoints replay cleanly"
+  GSD-WP02:
+    title: "Transition catalogue"
+    compute: low
+    dependencies: [GSD-WP01]
+    exit: "candidate transitions classified under soft-margin contract"
+  GSD-WP03:
+    title: "Adversarial transition validation"
+    compute: low
+    dependencies: [GSD-WP02]
+    mode: independent_blind_preferred
+    exit: "confirmed transitions or falsified candidates"
+  GSD-WP04:
+    title: "CPS transition-local dynamics"
+    compute: medium
+    dependencies: [GSD-WP03]
+    exit: "predictive signal, descriptive-only, or no-signal disposition"
+  GSD-WP05:
+    title: "Mechanistic/operator localization"
+    compute: medium
+    dependencies: [GSD-WP03]
+    exit: "held-out signature validation or rejection"
+  GSD-WP06:
+    title: "Recovery and Residual test"
+    compute: medium
+    dependencies: [GSD-WP03]
+    exit: "strongest supported E0-E4 transition classification"
+  GSD-WP07:
+    title: "Data-window attribution"
+    compute: medium
+    dependencies: [GSD-WP03]
+    exit: "held-out micro-continuation support or rejection"
+  GSD-WP08:
+    title: "Curriculum control"
+    compute: medium
+    dependencies: [GSD-WP07]
+    exit: "multi-seed matched-control occupancy result"
+  GSD-WP09:
+    title: "Optimizer-state stabilization"
+    compute: medium_high
+    dependencies: [GSD-WP08]
+    exit: "matched-capability replicated optimizer result"
+  GSD-WP10:
+    title: "Architecture stabilization"
+    compute: medium_high
+    dependencies: [GSD-WP08]
+    exit: "matched-compute replicated architecture result"
+  GSD-WP11:
+    title: "OLMo3 32B and post-training confirmation"
+    compute: high
+    dependencies: [GSD-WP09, GSD-WP10]
+    dependency_semantics: "at least one of WP09/WP10 must establish held-out value; exact launch gate in plan G4"
+    exit: "held-out downstream transfer result"
+  GSD-WP12:
+    title: "Synthesis and doctrine reconciliation"
+    compute: low
+    dependencies: [GSD-WP11]
+    exit: "evidence matrix and standards recommendation"
+gates:
+  G0: "evaluator trustworthy"
+  G1: "transition real"
+  G2: "state distinction informative"
+  G3: "state controllable"
+  G4: "stabilization replicates"
+  G5: "downstream relevance"
+claim_firewall:
+  - "capacity allocation is a hypothesis"
+  - "behavioural transition does not prove mechanism change"
+  - "recovery does not prove mechanism identity"
+  - "no universal scalar diagnostic is assumed"
+  - "small-model evidence does not silently promote to 32B"

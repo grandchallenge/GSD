@@ -15,7 +15,7 @@ Scope includes:
 - optimizer and architecture stabilization studies;
 - scale-up and downstream confirmation.
 
-GSD is GCL-wide. It is not governed by, or operationally coupled to, the Adaptive Intelligence Atlas. Atlas, standards, Residual, CPS, K-DIAGNOSTICS, optimizer, architecture, and curriculum programmes may consume accepted GSD results independently.
+GSD is GCL-wide. It is not governed by, or operationally coupled to, any downstream synthesis, publication, standards, or programme-specific surface. Accepted results may be consumed by other GCL programmes through explicit handoffs.
 
 Claim firewall:
 

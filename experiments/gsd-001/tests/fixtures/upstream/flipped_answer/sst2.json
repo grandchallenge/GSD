@@ -1,0 +1,16 @@
+[
+  {
+    "seed": 0,
+    "correct_avg_prob": 0.8,
+    "correct_log_prob": -0.2,
+    "incorrect_avg_prob": 0.1,
+    "incorrect_log_prob": -1.2
+  },
+  {
+    "seed": 0,
+    "correct_avg_prob": 0.7,
+    "correct_log_prob": -0.3,
+    "incorrect_avg_prob": 0.2,
+    "incorrect_log_prob": -1.0
+  }
+]
