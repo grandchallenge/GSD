@@ -97,26 +97,32 @@ def build_prompts(
 
 def score_answers(llm, tokenizer, prompts: list[str], answers: list[str]) -> tuple[list[dict], list[str]]:
     from vllm import SamplingParams
+    from vllm.inputs import TokensPrompt
 
-    full_texts: list[str] = []
+    token_prompts = []
+    expected_ids: list[list[int]] = []
     starts: list[int] = []
     modes: list[str] = []
     for prompt, answer in zip(prompts, answers):
         full_ids, start, mode = resolve_answer_start(tokenizer, prompt, answer)
-        full_texts.append(prompt + " " + answer)
+        ids = list(full_ids)
+        token_prompts.append(TokensPrompt(prompt_token_ids=ids))
+        expected_ids.append(ids)
         starts.append(start)
         modes.append(mode)
 
     outputs = llm.generate(
-        full_texts,
+        token_prompts,
         SamplingParams(max_tokens=1, prompt_logprobs=1, temperature=0.0),
         use_tqdm=True,
     )
 
     result: list[dict] = []
-    for out, start in zip(outputs, starts):
+    for out, start, expected in zip(outputs, starts, expected_ids):
         seq = out.prompt_logprobs
-        ids = out.prompt_token_ids
+        ids = list(out.prompt_token_ids)
+        if ids != expected:
+            raise RuntimeError("vLLM token prompt drifted from exact boundary IDs")
         logs: list[float] = []
         probs: list[float] = []
         if seq is not None:
@@ -156,6 +162,10 @@ def score_pair_set(llm, tokenizer, prompts, correct, incorrect) -> dict:
         "boundary_all_stable": all(
             mode == "stable_prompt_space" for mode in all_modes
         ),
+        "boundary_all_exact": all(
+            mode in {"stable_prompt_space", "forced_separate_continuation"}
+            for mode in all_modes
+        ),
     }
 
 
@@ -189,6 +199,7 @@ def main() -> None:
 
     task_outputs = {}
     all_boundaries_stable = True
+    all_boundaries_exact = True
 
     for task_key, task_cfg in TASKS.items():
         rows = list(load_dataset(
@@ -203,6 +214,7 @@ def main() -> None:
         seed_outputs = {}
         pooled_margins: list[float] = []
         task_boundary_stable = True
+        task_boundary_exact = True
 
         for seed in args.seeds:
             prompts, correct, incorrect = build_prompts(
@@ -211,6 +223,7 @@ def main() -> None:
             result = score_pair_set(llm, tokenizer, prompts, correct, incorrect)
             pooled_margins.extend(result["margins"])
             task_boundary_stable = task_boundary_stable and result["boundary_all_stable"]
+            task_boundary_exact = task_boundary_exact and result["boundary_all_exact"]
             seed_outputs[str(seed)] = {
                 k: v for k, v in result.items() if k != "margins"
             }
@@ -223,11 +236,13 @@ def main() -> None:
             )
             result = score_pair_set(llm, tokenizer, prompts, correct, incorrect)
             task_boundary_stable = task_boundary_stable and result["boundary_all_stable"]
+            task_boundary_exact = task_boundary_exact and result["boundary_all_exact"]
             variants[variant] = {
                 k: v for k, v in result.items() if k != "margins"
             }
 
         all_boundaries_stable = all_boundaries_stable and task_boundary_stable
+        all_boundaries_exact = all_boundaries_exact and task_boundary_exact
         task_outputs[task_key] = {
             "base_replay": {
                 "seeds": seed_outputs,
@@ -235,6 +250,7 @@ def main() -> None:
             },
             "prompt_variants_seed0": variants,
             "boundary_all_stable": task_boundary_stable,
+            "boundary_all_exact": task_boundary_exact,
         }
 
     step = int(args.revision.split("step", 1)[1].split("-", 1)[0])
@@ -244,12 +260,14 @@ def main() -> None:
         "step": step,
         "tasks": task_outputs,
         "boundary_all_stable": all_boundaries_stable,
+        "boundary_all_exact": all_boundaries_exact,
     }
     write_json(out / "summary.json", summary)
     write_json(out / "manifest.json", {
         "programme": "GSD-001",
         "work_package": "GSD-WP03",
-        "kind": "TRUTHY_ADVERSARIAL_REPLAY",
+        "kind": "TRUTHY_ADVERSARIAL_REPLAY_BOUNDARY_V2",
+        "boundary_contract": "canonical_prefix_else_forced_separate_continuation_v1",
         "model_repository": args.model,
         "model_revision": args.revision,
         "model_resolved_sha": model_sha,
