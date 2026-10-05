@@ -1,0 +1,31 @@
+name: GSD evaluator tests
+
+on:
+  pull_request:
+    paths:
+      - "experiments/gsd-001/**"
+      - ".github/workflows/gsd-ci.yml"
+  push:
+    branches: [main]
+    paths:
+      - "experiments/gsd-001/**"
+      - ".github/workflows/gsd-ci.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  unit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -r experiments/gsd-001/requirements-ci.txt
+      - run: python -m compileall -q experiments/gsd-001
+      - run: bash -n experiments/gsd-001/colab/run_wp01_colab.sh
+      - run: PYTHONPATH=experiments/gsd-001 pytest -q experiments/gsd-001/tests
