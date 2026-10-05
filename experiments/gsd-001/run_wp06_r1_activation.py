@@ -15,7 +15,6 @@ sys.path.insert(0, str(HERE))
 from gsd.activation_recovery import PATCH_POINTS, adjudicate_r1, choose_discovery_layer
 from gsd.checkpoints import resolve_hf_dataset_sha, resolve_hf_model_sha
 from gsd.scoring import classify_margins, resolve_answer_start
-from run_wp06_r0_checkpoint import build_context_prompts
 
 SOURCE = "stage1-step2000-tokens5B"
 FLANK = "stage1-step3000-tokens7B"
@@ -26,6 +25,20 @@ PAIR_KEY = f"{SOURCE}->{TARGET}"
 DISCOVERY_ITEMS = list(range(0, 64))
 HELDOUT_ITEMS = list(range(64, 128))
 EXACT_MODES = {"stable_prompt_space", "forced_separate_continuation"}
+
+
+def build_base_k8_prompts(demos, tests, seed=0):
+    rng = random.Random(seed)
+    prompts = []
+    correct = []
+    incorrect = []
+    for test in tests:
+        chosen = rng.sample(demos, min(8, len(demos)))
+        blocks = [f"{d['prompt']} {d['answer']}" for d in chosen]
+        prompts.append("\n".join(blocks + [test["prompt"]]))
+        correct.append(test["correct_answer"])
+        incorrect.append(test["incorrect_answer"])
+    return prompts, correct, incorrect
 
 
 def write_json(path: Path, obj: Any) -> None:
@@ -303,9 +316,7 @@ def main() -> None:
         raise RuntimeError(f"WP06-R1 requires exactly 128 test rows, got {len(tests)}")
 
     source_tokenizer = load_tokenizer(args.model, SOURCE)
-    prompts, correct, incorrect = build_context_prompts(
-        demos, tests, variant="base_k8", seed=0
-    )
+    prompts, correct, incorrect = build_base_k8_prompts(demos, tests, seed=0)
     records, boundary_modes = make_records(source_tokenizer, prompts, correct, incorrect)
     exact_boundary_ok = all(mode in EXACT_MODES for mode in boundary_modes)
     all_indices = list(range(len(records)))
