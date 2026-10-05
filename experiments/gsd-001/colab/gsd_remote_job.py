@@ -176,6 +176,13 @@ def main() -> int:
             ]
             for revision in revisions:
                 argv += ["--revision", revision]
+        elif workload == "gsd_wp06_r0_context_recovery":
+            argv = [
+                sys.executable, str(source / "run_wp06_r0_batch.py"),
+                "--output-dir", str(run_root),
+                "--max-eval", str(int(job.get("max_eval", 128))),
+                "--protocol", "experiments/gsd-001/WP06_R0_PROTOCOL.md",
+            ]
         else:
             families = list(job.get("families", ["intuitive_answer"]))
             if not families:
