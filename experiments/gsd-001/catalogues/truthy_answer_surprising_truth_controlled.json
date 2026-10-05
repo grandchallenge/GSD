@@ -1,0 +1,56 @@
+{
+  "candidate_transitions": [
+    {
+      "control_validated": true,
+      "from_revision": "stage1-step0-tokens0B",
+      "from_state": "PATTERN_MATCHING",
+      "from_step": 0,
+      "status": "CANDIDATE_TRANSITION",
+      "step_gap": 2000,
+      "to_revision": "stage1-step2000-tokens5B",
+      "to_state": "GENERALIZING",
+      "to_step": 2000
+    },
+    {
+      "control_validated": true,
+      "from_revision": "stage1-step2000-tokens5B",
+      "from_state": "GENERALIZING",
+      "from_step": 2000,
+      "status": "CANDIDATE_TRANSITION",
+      "step_gap": 2000,
+      "to_revision": "stage1-step4000-tokens9B",
+      "to_state": "PATTERN_MATCHING",
+      "to_step": 4000
+    }
+  ],
+  "checkpoint_count": 20,
+  "claim_boundary": "A state reversal is not a candidate transition until its checkpoint pair has explicit stable-control evidence. WP03 validation is still required after candidate promotion.",
+  "control_evidence_mode": "pair",
+  "control_evidence_provided": true,
+  "state_reversals": [
+    {
+      "control_validated": true,
+      "from_revision": "stage1-step0-tokens0B",
+      "from_state": "PATTERN_MATCHING",
+      "from_step": 0,
+      "status": "CANDIDATE_TRANSITION",
+      "step_gap": 2000,
+      "to_revision": "stage1-step2000-tokens5B",
+      "to_state": "GENERALIZING",
+      "to_step": 2000
+    },
+    {
+      "control_validated": true,
+      "from_revision": "stage1-step2000-tokens5B",
+      "from_state": "GENERALIZING",
+      "from_step": 2000,
+      "status": "CANDIDATE_TRANSITION",
+      "step_gap": 2000,
+      "to_revision": "stage1-step4000-tokens9B",
+      "to_state": "PATTERN_MATCHING",
+      "to_step": 4000
+    }
+  ],
+  "target": "truthy_answer/surprising_truth",
+  "target_type": "task"
+}

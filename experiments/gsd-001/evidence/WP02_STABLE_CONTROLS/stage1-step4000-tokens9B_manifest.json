@@ -1,0 +1,18 @@
+{
+  "arithmetic_config": "successive_answer.arithmetic evaluated zero-shot without successive demonstrations",
+  "claim_boundary": "stable-control evidence only; no mechanism claim",
+  "dataset_repository": "jiaxin-wen/generalization-dynamics-evals",
+  "dataset_resolved_sha": "93b20d31573d8d0b824aea863a6c861b470f5900",
+  "hardware": "NVIDIA L4",
+  "kind": "STABLE_CONTROL_VALIDATION",
+  "language_model_config": "held-out SST-2 review text mean token log-likelihood",
+  "max_eval": 128,
+  "model_repository": "allenai/OLMo-2-0425-1B-early-training",
+  "model_resolved_sha": "81d51162f02d246ca78cfea99cd1d03c8aef365d",
+  "model_revision": "stage1-step4000-tokens9B",
+  "precision": "bfloat16",
+  "programme": "GSD-001",
+  "sentiment_config": "flipped_answer.sst2 reconstructed with correct-label demonstrations",
+  "sentiment_demo_k": 16,
+  "work_package": "GSD-WP02"
+}

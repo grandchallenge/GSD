@@ -1,0 +1,76 @@
+{
+  "stage1-step0-tokens0B->stage1-step2000-tokens5B": {
+    "catastrophic_degradation": false,
+    "control_ok": true,
+    "controls": {
+      "arithmetic": {
+        "catastrophic": false,
+        "delta_ci95": [
+          -0.07948622107505798,
+          0.5715098232030869
+        ],
+        "hard_accuracy_delta": 0.1640625,
+        "mean_margin_delta": 0.24429462663829327,
+        "resolved_degradation": false
+      },
+      "language_model": {
+        "catastrophic": false,
+        "delta_ci95": [
+          4.105226297781129,
+          4.686367612010347
+        ],
+        "mean_token_logprob_delta": 4.393600153553882,
+        "resolved_degradation": false
+      },
+      "sentiment": {
+        "catastrophic": false,
+        "delta_ci95": [
+          -0.2227280205115676,
+          0.2209669523872435
+        ],
+        "hard_accuracy_delta": -0.0625,
+        "mean_margin_delta": 0.00032307766377925873,
+        "resolved_degradation": false
+      }
+    },
+    "resolved_degradation_count": 0,
+    "rule": "fail if any catastrophic ordinary-capability degradation occurs or if at least two of three independent controls show resolved degradation"
+  },
+  "stage1-step2000-tokens5B->stage1-step4000-tokens9B": {
+    "catastrophic_degradation": false,
+    "control_ok": true,
+    "controls": {
+      "arithmetic": {
+        "catastrophic": false,
+        "delta_ci95": [
+          0.513600554317236,
+          0.9732899945229292
+        ],
+        "hard_accuracy_delta": 0.15625,
+        "mean_margin_delta": 0.7458375245332718,
+        "resolved_degradation": false
+      },
+      "language_model": {
+        "catastrophic": false,
+        "delta_ci95": [
+          0.9554695995190615,
+          1.3615208157404384
+        ],
+        "mean_token_logprob_delta": 1.154500742851412,
+        "resolved_degradation": false
+      },
+      "sentiment": {
+        "catastrophic": false,
+        "delta_ci95": [
+          0.175080316956155,
+          0.4872017166344449
+        ],
+        "hard_accuracy_delta": 0.25,
+        "mean_margin_delta": 0.3340746299363673,
+        "resolved_degradation": false
+      }
+    },
+    "resolved_degradation_count": 0,
+    "rule": "fail if any catastrophic ordinary-capability degradation occurs or if at least two of three independent controls show resolved degradation"
+  }
+}

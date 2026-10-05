@@ -5,9 +5,9 @@ issue: 1
 branch: "main"
 protected_plan: "governance/GSD-001_RESEARCH_PROGRAMME.md"
 scope: ["GSD-WP00", "GSD-WP01", "GSD-WP02", "GSD-WP03"]
-state: "WP01_CLOSED__WP02_CONTROL_VALIDATION"
-current_frontier: "WP02_STABLE_CONTROL_VALIDATION"
-next_action: "Run stable controls at steps 0, 2000, and 4000 for the Truthy reversals. Promote only endpoints whose controls remain stable; otherwise classify as generic degradation or evaluator/control failure."
+state: "WP02_CANDIDATES_PROMOTED__WP03_ACTIVE"
+current_frontier: "WP03_ADVERSARIAL_TRANSITION_VALIDATION"
+next_action: "Adversarially validate the three controlled Truthy candidates under prompt variants, token-boundary replay, and independent/flanking support. Confirm or falsify each exact transition."
 completion_gates:
   WP00:
     - "exact external source identities recorded"
@@ -117,3 +117,26 @@ completion_reporting:
     idempotence_marker: ".github-terminal-notified"
     retries: 3
   recovery_watcher: "experiments/gsd-001/colab/watch_hosted_run.py"
+
+
+wp02_control_validation:
+  receipt: "experiments/gsd-001/receipts/WP02_STABLE_CONTROLS_L4_RECEIPT.md"
+  experiment_id: "GSD-WP02-TRUTHY-STABLE-CONTROLS-L4-001"
+  status: "GREEN_ENGINEERING"
+  hardware: "NVIDIA L4"
+  pair_controls:
+    "stage1-step0-tokens0B->stage1-step2000-tokens5B": true
+    "stage1-step2000-tokens5B->stage1-step4000-tokens9B": true
+  candidate_transitions:
+    - task: "truthy_answer/surprising_truth"
+      from_step: 0
+      to_step: 2000
+      direction: "PATTERN_MATCHING_TO_GENERALIZING"
+    - task: "truthy_answer/surprising_truth"
+      from_step: 2000
+      to_step: 4000
+      direction: "GENERALIZING_TO_PATTERN_MATCHING"
+    - task: "truthy_answer/common_misconception"
+      from_step: 0
+      to_step: 2000
+      direction: "GENERALIZING_TO_PATTERN_MATCHING"
