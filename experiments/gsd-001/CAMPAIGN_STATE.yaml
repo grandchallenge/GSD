@@ -5,9 +5,9 @@ issue: 1
 branch: "main"
 protected_plan: "governance/GSD-001_RESEARCH_PROGRAMME.md"
 scope: ["GSD-WP00", "GSD-WP01", "GSD-WP02", "GSD-WP03"]
-state: "WP01_CLOSED__WP02_ACTIVE"
-current_frontier: "WP02_PAPER_PROBE_EXPANSION"
-next_action: "Run the frozen L4 paper-probe expansion in compute order: truthy_answer, successive_answer, repetitive_answer, flipped_answer; catalogue task-level reversals after each family."
+state: "WP01_CLOSED__WP02_CONTROL_VALIDATION"
+current_frontier: "WP02_STABLE_CONTROL_VALIDATION"
+next_action: "Run stable controls at steps 0, 2000, and 4000 for the Truthy reversals. Promote only endpoints whose controls remain stable; otherwise classify as generic degradation or evaluator/control failure."
 completion_gates:
   WP00:
     - "exact external source identities recorded"
@@ -39,8 +39,8 @@ colab_execution:
   adapter: "experiments/gsd-001/colab/gsd_remote_job.py"
   payload_builder: "experiments/gsd-001/colab/build_payload.py"
   host_launcher: "experiments/gsd-001/colab/run_wp01_colab.sh"
-  frozen_job: "experiments/gsd-001/colab/jobs/wp01_olmo2_1b_crt_coarse20_t4.json"
-  requested_accelerator: "T4"
+  frozen_job: "experiments/gsd-001/colab/jobs/wp02_olmo2_1b_truthy_coarse20_l4.json"
+  requested_accelerator: "L4"
   checkpoint_count: 20
   checkpoint_design: "steps 0,2000,...,36000 plus terminal flank 35000"
   host_cli_observed: "google-colab-cli 0.7.4"
@@ -70,3 +70,50 @@ wp02_expansion:
   primary_accelerator: "L4"
   fallback_accelerator: "A100"
   stop_rule: "After each family, catalogue exact task-level state reversals. A reversal still requires stable-control evidence before candidate promotion."
+
+wp02_truthy_result:
+  receipt: "experiments/gsd-001/receipts/WP02_TRUTHY_L4_RECEIPT.md"
+  experiment_id: "GSD-WP02-OLMO2-1B-TRUTHY-COARSE20-L4-001"
+  status: "GREEN_ENGINEERING"
+  hardware: "NVIDIA L4"
+  checkpoint_count: 20
+  state_reversals:
+    - task: "truthy_answer/surprising_truth"
+      from_step: 0
+      from_state: "PATTERN_MATCHING"
+      to_step: 2000
+      to_state: "GENERALIZING"
+      disposition: "STATE_REVERSAL_REQUIRES_CONTROL_VALIDATION"
+    - task: "truthy_answer/surprising_truth"
+      from_step: 2000
+      from_state: "GENERALIZING"
+      to_step: 4000
+      to_state: "PATTERN_MATCHING"
+      disposition: "STATE_REVERSAL_REQUIRES_CONTROL_VALIDATION"
+    - task: "truthy_answer/common_misconception"
+      from_step: 0
+      from_state: "GENERALIZING"
+      to_step: 2000
+      to_state: "PATTERN_MATCHING"
+      disposition: "STATE_REVERSAL_REQUIRES_CONTROL_VALIDATION"
+  candidate_transitions: 0
+  control_evidence_provided: false
+
+completion_reporting:
+  status_file: "RUN_STATUS.json"
+  state_machine: ["QUEUED", "ALLOCATING", "RUNNING", "VERIFYING", "GREEN", "RED"]
+  green_gate:
+    - "receipt status GREEN_ENGINEERING"
+    - "source payload digest matches"
+    - "job digest matches"
+    - "result digest matches"
+    - "revision count matches frozen job"
+    - "summary count matches frozen job"
+    - "manifest count matches frozen job"
+    - "Colab session cleanup succeeds"
+  terminal_notification:
+    target: "grandchallenge/GSD#1"
+    mechanism: "authenticated gh issue comment from host"
+    idempotence_marker: ".github-terminal-notified"
+    retries: 3
+  recovery_watcher: "experiments/gsd-001/colab/watch_hosted_run.py"
