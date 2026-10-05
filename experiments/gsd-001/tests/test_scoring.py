@@ -16,6 +16,18 @@ class FakeTokenizer:
             "Q: 2+2? A: ": [1, 2, 3],
             "Q: 2+2? A: 4": [1, 2, 3, 4],
             "Q: 2+2? A:": [1, 2],
+            " 4": [9],
+        }
+        return table[text]
+
+
+class MergingTokenizer:
+    def encode(self, text, add_special_tokens=False):
+        table = {
+            "Q: A: ": [1, 2, 3],
+            "Q: A: True": [1, 2, 99],
+            "Q: A:": [1, 2],
+            " True": [77],
         }
         return table[text]
 
@@ -25,6 +37,13 @@ def test_stable_answer_boundary():
     assert ids == [1, 2, 3, 4]
     assert start == 3
     assert mode == "stable_prompt_space"
+
+
+def test_forced_continuation_boundary_avoids_merge():
+    ids, start, mode = resolve_answer_start(MergingTokenizer(), "Q: A:", "True")
+    assert ids == [1, 2, 77]
+    assert start == 2
+    assert mode == "forced_separate_continuation"
 
 
 class MergeTokenizer:
