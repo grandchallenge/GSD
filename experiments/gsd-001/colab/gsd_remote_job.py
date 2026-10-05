@@ -139,24 +139,36 @@ def main() -> int:
         if not revisions:
             raise RuntimeError("job must provide exact revisions")
 
-        families = list(job.get("families", ["intuitive_answer"]))
-        if not families:
-            raise RuntimeError("job must provide at least one evaluation family")
+        workload = str(job.get("workload", "gsd_wp01_checkpoint_sweep"))
+        families = None
 
-        argv = [
-            sys.executable, str(source / "run_sweep.py"),
-            "--upstream-dir", str(upstream),
-            "--output-dir", str(run_root),
-            "--families", *families,
-            "--n-seeds", str(int(job.get("n_seeds", 1))),
-            "--max-eval", str(int(job.get("max_eval", 128))),
-        ]
-        for revision in revisions:
-            argv += ["--revision", revision]
+        if workload == "gsd_wp02_stable_controls":
+            argv = [
+                sys.executable, str(source / "run_controls.py"),
+                "--output-dir", str(run_root),
+                "--max-eval", str(int(job.get("max_eval", 128))),
+                "--sentiment-demo-k", str(int(job.get("sentiment_demo_k", 16))),
+            ]
+            for revision in revisions:
+                argv += ["--revision", revision]
+        else:
+            families = list(job.get("families", ["intuitive_answer"]))
+            if not families:
+                raise RuntimeError("job must provide at least one evaluation family")
+            argv = [
+                sys.executable, str(source / "run_sweep.py"),
+                "--upstream-dir", str(upstream),
+                "--output-dir", str(run_root),
+                "--families", *families,
+                "--n-seeds", str(int(job.get("n_seeds", 1))),
+                "--max-eval", str(int(job.get("max_eval", 128))),
+            ]
+            for revision in revisions:
+                argv += ["--revision", revision]
 
         returncode = run_logged(argv, SOURCE_ROOT)
         if returncode != 0:
-            raise RuntimeError(f"GSD sweep exited with code {returncode}")
+            raise RuntimeError(f"GSD hosted workload exited with code {returncode}")
 
         summaries = sorted(run_root.glob("*/summary.json"))
         manifests = sorted(run_root.glob("*/manifest.json"))
@@ -172,6 +184,7 @@ def main() -> int:
             "summary_count": len(summaries),
             "manifest_count": len(manifests),
             "families": families,
+            "workload": workload,
             "runtime": runtime,
         }, indent=2, sort_keys=True) + "\n", encoding="utf-8")
         status = "GREEN_ENGINEERING"
@@ -195,7 +208,7 @@ def main() -> int:
             "job_sha256": sha256_file(JOB_PATH) if JOB_PATH.exists() else None,
             "result_sha256": sha256_file(RESULT_PATH) if RESULT_PATH.exists() else None,
             "runtime": runtime,
-            "workload": "gsd_wp01_checkpoint_sweep",
+            "workload": job.get("workload", "gsd_wp01_checkpoint_sweep"),
             "scientific_execution_authorized": True,
             "promotion_claim": False,
             "fatal_error": fatal_error,
