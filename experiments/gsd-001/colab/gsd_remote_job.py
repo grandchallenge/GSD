@@ -163,6 +163,19 @@ def main() -> int:
             ]
             for revision in revisions:
                 argv += ["--revision", revision]
+        elif workload == "gsd_wp03_truthy_boundary_repair":
+            argv = [
+                sys.executable, str(source / "run_wp03_truthy_batch.py"),
+                "--output-dir", str(run_root),
+                "--max-eval", str(int(job.get("max_eval", 128))),
+                "--seeds", *[str(x) for x in job.get("seeds", [0, 1, 2, 3])],
+                "--variants", *list(job.get("variants", [
+                    "instruction_prefix", "expanded_markers", "double_newline"
+                ])),
+                "--protocol", "experiments/gsd-001/WP03_BOUNDARY_REPAIR_PROTOCOL.md",
+            ]
+            for revision in revisions:
+                argv += ["--revision", revision]
         else:
             families = list(job.get("families", ["intuitive_answer"]))
             if not families:
