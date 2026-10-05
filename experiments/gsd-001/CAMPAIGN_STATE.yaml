@@ -5,9 +5,9 @@ issue: 1
 branch: "main"
 protected_plan: "governance/GSD-001_RESEARCH_PROGRAMME.md"
 scope: ["GSD-WP00", "GSD-WP01", "GSD-WP02", "GSD-WP03"]
-state: "WP02_CANDIDATES_PROMOTED__WP03_ACTIVE"
-current_frontier: "WP03_ADVERSARIAL_TRANSITION_VALIDATION"
-next_action: "Adversarially validate the three controlled Truthy candidates under prompt variants, token-boundary replay, and independent/flanking support. Confirm or falsify each exact transition."
+state: "WP03_V1_BOUNDARY_RISK__WP03R_ACTIVE"
+current_frontier: "WP03R_EXACT_BOUNDARY_REPLAY"
+next_action: "Complete the frozen WP03R exact-boundary replay on L4 and adjudicate the three Truthy candidates under the unchanged prompt/replay/control gates."
 completion_gates:
   WP00:
     - "exact external source identities recorded"
@@ -39,10 +39,10 @@ colab_execution:
   adapter: "experiments/gsd-001/colab/gsd_remote_job.py"
   payload_builder: "experiments/gsd-001/colab/build_payload.py"
   host_launcher: "experiments/gsd-001/colab/run_wp01_colab.sh"
-  frozen_job: "experiments/gsd-001/colab/jobs/wp02_olmo2_1b_truthy_coarse20_l4.json"
+  frozen_job: "experiments/gsd-001/colab/jobs/wp03r_truthy_exact_boundary_l4.json"
   requested_accelerator: "L4"
-  checkpoint_count: 20
-  checkpoint_design: "steps 0,2000,...,36000 plus terminal flank 35000"
+  checkpoint_count: 5
+  checkpoint_design: "steps 0,1000,2000,3000,4000"
   host_cli_observed: "google-colab-cli 0.7.4"
   qtr_documented_cli: "google-colab-cli 0.6.0"
   cli_compatibility_note: "Lifecycle primitives new/upload/exec/download/log/stop remain available; version drift must be receipted."
@@ -140,3 +140,30 @@ wp02_control_validation:
       from_step: 0
       to_step: 2000
       direction: "GENERALIZING_TO_PATTERN_MATCHING"
+
+wp03_v1:
+  receipt: "experiments/gsd-001/receipts/WP03_TRUTHY_ADVERSARIAL_L4_RECEIPT.md"
+  experiment_id: "GSD-WP03-TRUTHY-ADVERSARIAL-L4-001"
+  source_commit: "6bdc58fa3564408227039e259501d072a3e10c8c"
+  engineering_status: "GREEN_ENGINEERING"
+  scientific_disposition: "TOKEN_BOUNDARY_ARTEFACT_RISK__NO_CONFIRMED_TRANSITION"
+  independent_replay_support:
+    "surprising_truth_0_to_2000": "4/4"
+    "surprising_truth_2000_to_4000": "4/4"
+    "common_misconception_0_to_2000": "4/4"
+  boundary_failure: "All scored Truthy spans used fallback_prompt_only."
+  immutable: true
+
+wp03r:
+  protocol: "experiments/gsd-001/WP03_BOUNDARY_REPAIR_PROTOCOL.md"
+  frozen_job: "experiments/gsd-001/colab/jobs/wp03r_truthy_exact_boundary_l4.json"
+  experiment_id: "GSD-WP03R-TRUTHY-EXACT-BOUNDARY-L4-001"
+  source_commit: "c7dccf39353a0c9094e18d1d475b82411b33f4af"
+  accelerator: "L4"
+  run_id: "20261005T090911Z-396"
+  state: "RUNNING"
+  boundary_contract:
+    canonical_mode: "stable_prompt_space"
+    repair_mode: "forced_separate_continuation"
+    exact_token_ids_to_vllm: true
+    retokenization_forbidden: true
