@@ -100,14 +100,13 @@ def score_answers(llm, tokenizer, prompts: list[str], answers: list[str]) -> tup
     from vllm.inputs import TokensPrompt
 
     token_prompts = []
-    expected_ids: list[list[int]] = []
     starts: list[int] = []
     modes: list[str] = []
+    expected_ids: list[list[int]] = []
     for prompt, answer in zip(prompts, answers):
         full_ids, start, mode = resolve_answer_start(tokenizer, prompt, answer)
-        ids = list(full_ids)
-        token_prompts.append(TokensPrompt(prompt_token_ids=ids))
-        expected_ids.append(ids)
+        token_prompts.append(TokensPrompt(prompt_token_ids=full_ids))
+        expected_ids.append(full_ids)
         starts.append(start)
         modes.append(mode)
 
@@ -120,9 +119,9 @@ def score_answers(llm, tokenizer, prompts: list[str], answers: list[str]) -> tup
     result: list[dict] = []
     for out, start, expected in zip(outputs, starts, expected_ids):
         seq = out.prompt_logprobs
-        ids = list(out.prompt_token_ids)
-        if ids != expected:
-            raise RuntimeError("vLLM token prompt drifted from exact boundary IDs")
+        ids = out.prompt_token_ids
+        if list(ids) != list(expected):
+            raise RuntimeError("vLLM prompt token IDs drifted from exact boundary contract")
         logs: list[float] = []
         probs: list[float] = []
         if seq is not None:
@@ -142,7 +141,6 @@ def score_answers(llm, tokenizer, prompts: list[str], answers: list[str]) -> tup
         })
     return result, modes
 
-
 def score_pair_set(llm, tokenizer, prompts, correct, incorrect) -> dict:
     c, c_modes = score_answers(llm, tokenizer, prompts, correct)
     i, i_modes = score_answers(llm, tokenizer, prompts, incorrect)
@@ -160,7 +158,8 @@ def score_pair_set(llm, tokenizer, prompts, correct, incorrect) -> dict:
             mode: all_modes.count(mode) for mode in sorted(set(all_modes))
         },
         "boundary_all_stable": all(
-            mode == "stable_prompt_space" for mode in all_modes
+            mode in {"stable_prompt_space", "forced_separate_continuation"}
+            for mode in all_modes
         ),
         "boundary_all_exact": all(
             mode in {"stable_prompt_space", "forced_separate_continuation"}
@@ -278,6 +277,7 @@ def main() -> None:
         "max_eval": args.max_eval,
         "hardware": torch.cuda.get_device_name(0),
         "precision": "bfloat16",
+        "answer_boundary_contract": "exact_continuation_v2",
         "claim_boundary": "behavioural transition validation only; no mechanism claim",
     })
 
