@@ -5,9 +5,9 @@ issue: 1
 branch: "main"
 protected_plan: "governance/GSD-001_RESEARCH_PROGRAMME.md"
 scope: ["GSD-WP00", "GSD-WP01", "GSD-WP02", "GSD-WP03"]
-state: "G1_OPEN__WP03R_CLOSED"
-current_frontier: "G1_UNLOCKED_WP04_WP05_WP06"
-next_action: "Enter the G1-unlocked tranche. First determine WP04 optimizer-artifact availability; if unavailable, execute WP05 mechanistic/operator localization and WP06 recovery/Residual tests on the confirmed surprising_truth transition localized to steps 2000-3000."
+state: "G1_OPEN__WP06_R0_E2_ACCESSIBILITY"
+current_frontier: "WP06_R1_ACTIVATION_RECOVERY"
+next_action: "Execute WP06 R1 activation-space recovery under the original demo-bearing context, using the confirmed surprising_truth 2k generalizing checkpoint as source and 4k pattern-matching checkpoint as primary target; 3k remains the localization flank."
 completion_gates:
   WP00:
     - "exact external source identities recorded"
@@ -194,3 +194,42 @@ wp03r_result:
       to_step: 2000
       disposition: "PROMPT_SENSITIVE_UNCONFIRMED"
   unlocked_work_packages: ["GSD-WP04", "GSD-WP05", "GSD-WP06"]
+
+wp04_artifact_status:
+  receipt: "experiments/gsd-001/receipts/WP04_OPTIMIZER_ARTIFACT_AVAILABILITY.md"
+  disposition: "BLOCKED_EXTERNAL_ARTIFACT_ABSENT"
+  exact_revisions_checked:
+    - "stage1-step2000-tokens5B"
+    - "stage1-step3000-tokens7B"
+    - "stage1-step4000-tokens9B"
+  optimizer_state_available: false
+
+wp06_r0:
+  receipt: "experiments/gsd-001/receipts/WP06_R0_CONTEXT_RECOVERY_L4_RECEIPT.md"
+  protocol: "experiments/gsd-001/WP06_R0_PROTOCOL.md"
+  experiment_id: "GSD-WP06-R0-CONTEXT-RECOVERY-L4-001"
+  source_commit: "2046a2fe2f8836db64619b1829d99c91c43fd2ad"
+  run_id: "20261005T110356Z-714"
+  engineering_status: "GREEN_ENGINEERING"
+  disposition: "R0_INSTRUCTION_ACCESSIBILITY"
+  strongest_evidence_level: "E2_ACCESSIBILITY_SHIFT_SUPPORTED"
+  structural_context_recovery: false
+  instruction_recoveries:
+    - "zero_shot_truth"
+  source_step_2000_all_variants: "GENERALIZING"
+  target_step_4000:
+    base_k8: "PATTERN_MATCHING"
+    truth_instruction_k8: "PATTERN_MATCHING"
+    zero_shot_truth: "GENERALIZING"
+  flank_step_3000:
+    base_k8: "PATTERN_MATCHING"
+    truth_instruction_k8: "PATTERN_MATCHING"
+    zero_shot_truth: "GENERALIZING"
+  claim_boundary: "Accessibility/expression only; no mechanism persistence claim."
+
+wp06_r1_entry:
+  source_revision: "stage1-step2000-tokens5B"
+  target_revision: "stage1-step4000-tokens9B"
+  localization_flank: "stage1-step3000-tokens7B"
+  context: "original demo-bearing base_k8"
+  objective: "Test bounded residual-stream recovery before any parameter intervention."
