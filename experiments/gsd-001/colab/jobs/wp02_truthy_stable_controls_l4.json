@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "experiment_id": "GSD-WP02-TRUTHY-STABLE-CONTROLS-L4-001",
+  "workload": "gsd_wp02_stable_controls",
+  "resource": {
+    "variant": "GPU",
+    "accelerator": "L4"
+  },
+  "remote_timeout_seconds": 7200,
+  "scientific_backend": "vllm_bfloat16_controls",
+  "scientific_execution_authorized": true,
+  "max_eval": 128,
+  "sentiment_demo_k": 16,
+  "revisions": [
+    "stage1-step0-tokens0B",
+    "stage1-step2000-tokens5B",
+    "stage1-step4000-tokens9B"
+  ],
+  "controls": [
+    "ordinary_sst2_correct_label_icl",
+    "zero_shot_arithmetic",
+    "heldout_sst2_review_token_loglikelihood"
+  ],
+  "control_rule": {
+    "pair_specific": true,
+    "fail_on_any_catastrophic_degradation": true,
+    "fail_if_resolved_degradations_at_least": 2
+  },
+  "claim_boundary": {
+    "behavioural_control_evidence_only": true,
+    "mechanism_claim": false,
+    "promotion_authorized": false,
+    "wp03_required_after_candidate_promotion": true
+  }
+}
