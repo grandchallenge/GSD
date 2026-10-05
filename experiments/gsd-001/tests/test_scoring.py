@@ -27,6 +27,24 @@ def test_stable_answer_boundary():
     assert mode == "stable_prompt_space"
 
 
+class MergeTokenizer:
+    def encode(self, text, add_special_tokens=False):
+        table = {
+            "Q: 2+2? A: ": [1, 2, 3],
+            "Q: 2+2? A: 4": [1, 9],
+            "Q: 2+2? A:": [1, 2],
+            " 4": [8],
+        }
+        return table[text]
+
+
+def test_forced_continuation_boundary():
+    ids, start, mode = resolve_answer_start(MergeTokenizer(), "Q: 2+2? A:", "4")
+    assert ids == [1, 2, 8]
+    assert start == 2
+    assert mode == "forced_separate_continuation"
+
+
 def test_golden_score_arithmetic():
     fixture = json.loads(
         (Path(__file__).parents[1] / "golden_fixture.json").read_text()
