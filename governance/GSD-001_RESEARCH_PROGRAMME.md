@@ -3,7 +3,7 @@
 **Status:** executable programme plan  
 **Date:** 2026-10-04  
 **Governing authority:** \`grandchallenge/GSD\`  
-**Governing issue:** #139  
+**Governing issue:** #1  
 **Primary motivating source:** Wen, Wu, Song, Chen, *Generalization Dynamics of LM Pre-training*, arXiv:2609.33150v1  
 **Programme type:** empirical + mechanistic + controlled-training research  
 **Default execution style:** bounded work packages, exact checkpoint identities, replayable artifacts, independent adversarial lanes where useful
