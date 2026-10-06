@@ -5,9 +5,9 @@ issue: 1
 branch: "main"
 protected_plan: "governance/GSD-001_RESEARCH_PROGRAMME.md"
 scope: ["GSD-WP00", "GSD-WP01", "GSD-WP02", "GSD-WP03"]
-state: "G2_OPEN__WP06_CLOSED_E2__R4_GENERIC_DAMAGE"
-current_frontier: "WP05_MECHANISTIC_OPERATOR_LOCALIZATION"
-next_action: "Execute WP05 mechanistic/operator localization on the confirmed surprising_truth transition, preserving the WP06 E2 evidence ceiling. WP04 remains blocked on absent optimizer artifacts; WP07 and targeted scale replication are unlocked by G2 but remain downstream of the ordered WP05 frontier."
+state: "G2_OPEN__WP05_WITHIN_TRANSITION_VALIDATED__E2_ACCESSIBILITY"
+current_frontier: "WP05_CROSS_TRANSITION_VALIDATION_BOUNDARY"
+next_action: "Preserve the frozen WP05 layer-13 / layer-14 query-head-2 signature and validate it only on a future independent CONFIRMED_TRANSITION. Do not promote unconfirmed catalogue candidates to satisfy the WP05 exit gate. WP04 remains blocked on absent optimizer artifacts; G2 continues to unlock WP07 and targeted scale replication as separate downstream work."
 completion_gates:
   WP00:
     - "exact external source identities recorded"
@@ -401,3 +401,52 @@ gate_g2:
     - "GSD-WP07"
     - "targeted OLMo3 7B/32B replication"
   ordered_next_frontier: "GSD-WP05"
+
+wp05:
+  receipt: "experiments/gsd-001/receipts/WP05_MECHANISTIC_OPERATOR_A100_RECEIPT.md"
+  protocol: "experiments/gsd-001/WP05_PROTOCOL.md"
+  experiment_id: "GSD-WP05-MECHANISTIC-OPERATOR-A100-001"
+  source_commit: "1691e82ee6691e36bb3cfbeb4ffe619dff484805"
+  run_id: "20261006T094253Z-3095"
+  engineering_status: "GREEN_ENGINEERING"
+  hardware: "NVIDIA A100-SXM4-40GB"
+  disposition: "WP05_SIGNATURE_VALIDATED_WITHIN_TRANSITION"
+  programme_exit_gate: "CROSS_TRANSITION_VALIDATION_NOT_YET_AVAILABLE"
+  data_boundary:
+    discovery_rows: "0-63"
+    evaluation_rows: "64-127"
+    fresh_holdout_claim: false
+    all_surprising_truth_rows_previously_consumed: true
+  behavioural_gate:
+    source_2k_discovery: "GENERALIZING"
+    source_2k_evaluation: "GENERALIZING"
+    flank_3k_discovery: "PATTERN_MATCHING"
+    flank_3k_evaluation: "PATTERN_MATCHING"
+    target_4k_discovery: "PATTERN_MATCHING"
+    target_4k_evaluation: "PATTERN_MATCHING"
+    exact_boundary_ok: true
+  representation_signature:
+    layer: 13
+    evaluation_locality_difference: 0.1146126389503479
+    evaluation_percentile: 1.0
+    discovery_evaluation_change_direction_cosine: 0.9955041408538818
+    passed: true
+  operator_signature:
+    kind: "Q"
+    layer: 14
+    head: 2
+    evaluation_locality_difference: 0.2951940894126892
+    evaluation_percentile: 0.99609375
+    discovery_evaluation_change_direction_cosine: 0.9975249767303467
+    passed: true
+  failed_execution_preserved:
+    run_id: "20261006T093654Z-2786"
+    source_commit: "9c3d840c78ad4003575ba71e453769b8a43c8392"
+    status: "RED_ENGINEERING"
+    cause: "OLMo2 q/k normalization tensor-ordering implementation defect"
+  claim_boundary:
+    - "Within-transition representation/operator signature validated."
+    - "No causal mechanism claim."
+    - "No cross-transition predictive claim."
+    - "Strongest programme evidence remains E2_ACCESSIBILITY_SHIFT_SUPPORTED."
+  remaining_obligation: "Validate frozen layer13/Q-layer14-head2 signature on a future independent CONFIRMED_TRANSITION."
