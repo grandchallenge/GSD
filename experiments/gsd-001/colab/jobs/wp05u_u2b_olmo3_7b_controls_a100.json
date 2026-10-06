@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "experiment_id": "GSD-WP05U-U2B-OLMO3-7B-STABLE-CONTROLS-A100-001",
+  "workload": "gsd_wp02_stable_controls",
+  "resource": {"variant": "GPU", "accelerator": "A100"},
+  "remote_timeout_seconds": 14400,
+  "scientific_execution_authorized": true,
+  "model": "allenai/Olmo-3-1025-7B",
+  "revisions": ["stage1-step565000", "stage1-step705000"],
+  "max_eval": 128,
+  "sentiment_demo_k": 16,
+  "protocol": "experiments/gsd-001/WP05U_7B_CONFIRM_CONTROL_PROTOCOL.md",
+  "claim_boundary": "7B endpoint conventional-control validation only; no transition or mechanistic claim"
+}
