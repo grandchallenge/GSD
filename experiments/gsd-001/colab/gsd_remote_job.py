@@ -230,6 +230,7 @@ def main() -> int:
                 sys.executable, str(source / "run_sweep.py"),
                 "--upstream-dir", str(upstream),
                 "--output-dir", str(run_root),
+                "--model", str(job.get("model", "allenai/OLMo-2-0425-1B-early-training")),
                 "--families", *families,
                 "--n-seeds", str(int(job.get("n_seeds", 1))),
                 "--max-eval", str(int(job.get("max_eval", 128))),
