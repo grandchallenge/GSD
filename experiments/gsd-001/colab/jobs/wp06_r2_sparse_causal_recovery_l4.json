@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "experiment_id": "GSD-WP06-R2-SPARSE-CAUSAL-RECOVERY-L4-001",
+  "workload": "gsd_wp06_r2_sparse_causal_recovery",
+  "resource": {
+    "variant": "GPU",
+    "accelerator": "L4"
+  },
+  "remote_timeout_seconds": 14400,
+  "scientific_backend": "transformers_bfloat16_sparse_module_patch_v1",
+  "scientific_execution_authorized": true,
+  "revisions": [
+    "stage1-step2000-tokens5B",
+    "stage1-step3000-tokens7B",
+    "stage1-step4000-tokens9B"
+  ],
+  "candidate_pairs": [
+    {
+      "task": "truthy_answer/surprising_truth",
+      "from": "stage1-step0-tokens0B",
+      "to": "stage1-step2000-tokens5B"
+    },
+    {
+      "task": "truthy_answer/surprising_truth",
+      "from": "stage1-step2000-tokens5B",
+      "to": "stage1-step4000-tokens9B"
+    },
+    {
+      "task": "truthy_answer/common_misconception",
+      "from": "stage1-step0-tokens0B",
+      "to": "stage1-step2000-tokens5B"
+    }
+  ],
+  "confirmation_rule": {
+    "control_ok_required": true,
+    "token_boundary_fallback_allowed": false,
+    "prompt_attack_variants_all_must_match_endpoint_states": true,
+    "independent_replay_min_seeds": 3,
+    "independent_replay_total_seeds": 4,
+    "flanks_supplementary_only": true
+  },
+  "claim_boundary": {
+    "sparse_causal_recovery_only": true,
+    "evidence_ceiling": "E3_MECHANISM_PERSISTENCE_SUPPORTED",
+    "literal_circuit_identity_claim": false,
+    "optimizer_claim": false,
+    "architecture_claim": false
+  },
+  "boundary_contract": {
+    "protocol": "experiments/gsd-001/WP03_BOUNDARY_REPAIR_PROTOCOL.md",
+    "canonical_mode": "stable_prompt_space",
+    "repair_mode": "forced_separate_continuation",
+    "retokenization_forbidden": true,
+    "exact_token_id_match_required": true
+  },
+  "protocol": "experiments/gsd-001/WP06_R2_PROTOCOL.md",
+  "batch_size": 2,
+  "intervention": {
+    "modules": [
+      "layer12_attention",
+      "layer12_mlp",
+      "layer13_attention",
+      "layer13_mlp",
+      "layer14_attention",
+      "layer14_mlp",
+      "layer15_attention",
+      "layer15_mlp",
+      "layer16_attention",
+      "layer16_mlp"
+    ],
+    "discovery_rows": "128-191",
+    "heldout_rows": "192-255",
+    "reserve_rows": "256-286",
+    "selection_order": "increasing_layer_then_attention_before_mlp",
+    "source": "stage1-step2000-tokens5B",
+    "primary_target": "stage1-step4000-tokens9B",
+    "localization_flank": "stage1-step3000-tokens7B",
+    "identity_tolerance": 0.001,
+    "shuffle_seed": 17
+  }
+}
