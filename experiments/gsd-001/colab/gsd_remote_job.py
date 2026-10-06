@@ -196,6 +196,11 @@ def main() -> int:
                 "--output-dir", str(run_root),
                 "--batch-size", str(int(job.get("batch_size", 2))),
             ]
+        elif workload == "gsd_wp06_r3_parameter_light_recovery":
+            argv = [
+                sys.executable, str(source / "run_wp06_r3_parameter.py"),
+                "--output-dir", str(run_root),
+            ]
         else:
             families = list(job.get("families", ["intuitive_answer"]))
             if not families:
