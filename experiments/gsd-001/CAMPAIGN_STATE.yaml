@@ -5,9 +5,9 @@ issue: 1
 branch: "main"
 protected_plan: "governance/GSD-001_RESEARCH_PROGRAMME.md"
 scope: ["GSD-WP00", "GSD-WP01", "GSD-WP02", "GSD-WP03"]
-state: "G1_OPEN__WP06_R1_REJECTED__E2_ACCESSIBILITY"
-current_frontier: "WP06_R2_SPARSE_CAUSAL_RECOVERY"
-next_action: "Freeze WP06 R2 sparse causal recovery under a fresh preregistration. Preserve the R1 held-out rejection; do not test the layer-16 discovery result post hoc on the consumed held-out split."
+state: "G1_OPEN__WP06_R2_NO_RECOVERY__E2_ACCESSIBILITY"
+current_frontier: "WP06_R3_PARAMETER_LIGHT_RECOVERY"
+next_action: "Freeze WP06 R3 parameter-light recovery under a new preregistration, using only the still-untouched rows 256-286 for fresh confirmation where applicable. Preserve R0-R2 negative/positive boundaries without post-hoc relaxation."
 completion_gates:
   WP00:
     - "exact external source identities recorded"
@@ -264,3 +264,35 @@ wp06_r2_entry:
   objective: "Test sparse causal recovery without relaxing the E2/E3 claim firewall."
   prerequisite: "Fresh preregistration required before selecting modules or new holdout data."
   context: "original demo-bearing base_k8"
+
+wp06_r2:
+  receipt: "experiments/gsd-001/receipts/WP06_R2_SPARSE_CAUSAL_RECOVERY_L4_RECEIPT.md"
+  protocol: "experiments/gsd-001/WP06_R2_PROTOCOL.md"
+  experiment_id: "GSD-WP06-R2-SPARSE-CAUSAL-RECOVERY-L4-001"
+  source_commit: "8724c4e0cd01404cb724c9ce9fbafe9016da921a"
+  run_id: "20261006T070241Z-1133"
+  engineering_status: "GREEN_ENGINEERING"
+  disposition: "NO_R2_RECOVERY"
+  strongest_evidence_level: "E2_ACCESSIBILITY_SHIFT_SUPPORTED"
+  fresh_data:
+    discovery_rows: "128-191"
+    heldout_rows: "192-255"
+    untouched_reserve_rows: "256-286"
+  discovery:
+    target_base_state: "PATTERN_MATCHING"
+    best_sparse_candidate: "layer12_attention"
+    best_sparse_candidate_state: "PATTERN_MATCHING"
+    target_base_mean_margin: -2.4462890687282197
+    best_sparse_mean_margin: -1.5224609294673428
+    selected_candidate: null
+  claim_boundary:
+    - "No sparse causal recovery under the declared single-module class."
+    - "No E3 persistence promotion."
+    - "No E4 mechanism-change claim."
+    - "Rows 256-286 remain untouched."
+
+wp06_r3_entry:
+  objective: "Test parameter-light recovery while separating recovery from rapid relearning."
+  prerequisite: "New frozen preregistration required."
+  fresh_confirmation_rows: "256-286"
+  claim_boundary: "R3 is ambiguous between persistence and rapid relearning and requires matched controls."
