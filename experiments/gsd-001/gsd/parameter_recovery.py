@@ -52,3 +52,24 @@ def adjudicate_r3(
         "treatment_generalizing": 0,
         "reversed_generalizing": 0,
     }
+
+
+
+def adjudicate_r3_control_repair(
+    *,
+    exact_boundary_ok: bool,
+    reproduction_ok: list[bool],
+    adapter_control_ok: list[bool],
+) -> dict:
+    if not exact_boundary_ok:
+        return {"disposition": "EXACT_BOUNDARY_CONTRACT_FAILED"}
+    if len(reproduction_ok) != 3 or not all(reproduction_ok):
+        return {"disposition": "R3_ADAPTER_REPRODUCTION_FAILED"}
+    if len(adapter_control_ok) != 3 or not all(adapter_control_ok):
+        return {"disposition": "R3_CONTROL_GATE_FAILED"}
+    return {
+        "disposition": "R3_CONTROL_GATE_REPAIRED",
+        "combined_r3_interpretation": (
+            "R3_PARAMETER_LIGHT_RECOVERY__PERSISTENCE_UNRESOLVED"
+        ),
+    }
