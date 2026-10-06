@@ -1,4 +1,4 @@
-from gsd.parameter_recovery import adjudicate_r3
+from gsd.parameter_recovery import adjudicate_r3, adjudicate_r3_control_repair
 
 
 def controls():
@@ -55,3 +55,31 @@ def test_r3_baseline_must_resolve():
     x = base_kwargs()
     x["target_state"] = "UNCERTAIN"
     assert adjudicate_r3(**x)["disposition"] == "R3_BASELINE_UNRESOLVED"
+
+
+
+def test_r3_control_repair_pass():
+    r = adjudicate_r3_control_repair(
+        exact_boundary_ok=True,
+        reproduction_ok=[True, True, True],
+        adapter_control_ok=[True, True, True],
+    )
+    assert r["disposition"] == "R3_CONTROL_GATE_REPAIRED"
+
+
+def test_r3_control_repair_fails_on_reproduction():
+    r = adjudicate_r3_control_repair(
+        exact_boundary_ok=True,
+        reproduction_ok=[True, False, True],
+        adapter_control_ok=[True, True, True],
+    )
+    assert r["disposition"] == "R3_ADAPTER_REPRODUCTION_FAILED"
+
+
+def test_r3_control_repair_fails_on_control_degradation():
+    r = adjudicate_r3_control_repair(
+        exact_boundary_ok=True,
+        reproduction_ok=[True, True, True],
+        adapter_control_ok=[True, False, True],
+    )
+    assert r["disposition"] == "R3_CONTROL_GATE_FAILED"
