@@ -190,6 +190,12 @@ def main() -> int:
                 "--max-eval", str(int(job.get("max_eval", 128))),
                 "--batch-size", str(int(job.get("batch_size", 2))),
             ]
+        elif workload == "gsd_wp06_r2_sparse_causal_recovery":
+            argv = [
+                sys.executable, str(source / "run_wp06_r2_sparse.py"),
+                "--output-dir", str(run_root),
+                "--batch-size", str(int(job.get("batch_size", 2))),
+            ]
         else:
             families = list(job.get("families", ["intuitive_answer"]))
             if not families:
