@@ -5,9 +5,9 @@ issue: 1
 branch: "main"
 protected_plan: "governance/GSD-001_RESEARCH_PROGRAMME.md"
 scope: ["GSD-WP00", "GSD-WP01", "GSD-WP02", "GSD-WP03"]
-state: "G2_OPEN__WP05_WITHIN_TRANSITION_VALIDATED__E2_ACCESSIBILITY"
-current_frontier: "WP05_CROSS_TRANSITION_VALIDATION_BOUNDARY"
-next_action: "Preserve the frozen WP05 layer-13 / layer-14 query-head-2 signature and validate it only on a future independent CONFIRMED_TRANSITION. Do not promote unconfirmed catalogue candidates to satisfy the WP05 exit gate. WP04 remains blocked on absent optimizer artifacts; G2 continues to unlock WP07 and targeted scale replication as separate downstream work."
+state: "G2_OPEN__WP05U_U1_NO_CAUSAL_EFFECT__E2_ACCESSIBILITY"
+current_frontier: "WP05_TRANSFER_SUBSPACE_AND_WP07_ATTRIBUTION"
+next_action: "Treat Q14/H2 as a validated within-transition marker but not a demonstrated single-head causal lever. Preserve the frozen layer-13/Q14H2 signature for the next independent CONFIRMED_TRANSITION; broaden transfer tests to normalized-depth/late-query subspaces; couple WP07 data attribution to behavioural and internal-state movement; targeted 7B/32B replication remains unlocked. Do not promote unconfirmed catalogue candidates merely to satisfy WP05."
 completion_gates:
   WP00:
     - "exact external source identities recorded"
@@ -450,3 +450,31 @@ wp05:
     - "No cross-transition predictive claim."
     - "Strongest programme evidence remains E2_ACCESSIBILITY_SHIFT_SUPPORTED."
   remaining_obligation: "Validate frozen layer13/Q-layer14-head2 signature on a future independent CONFIRMED_TRANSITION."
+
+
+wp05u_u1:
+  protocol: "experiments/gsd-001/WP05U_UTILITY_EXPANSION_PROTOCOL.md"
+  receipt: "experiments/gsd-001/receipts/WP05U_U1_DIRECTIONAL_CAUSAL_A100_RECEIPT.md"
+  experiment_id: "GSD-WP05U-U1-DIRECTIONAL-CAUSAL-A100-001"
+  source_commit: "ed980a16a6d59f99195a7a1678677b4e2690633a"
+  run_id: "20261006T111223Z-3546"
+  engineering_status: "GREEN_ENGINEERING"
+  hardware: "NVIDIA A100-SXM4-40GB"
+  disposition: "NO_HEAD2_CAUSAL_EFFECT"
+  target_q14h2:
+    reverse_mean_margin_delta: 0.004882816399913281
+    reverse_ci95: [-0.0048828296130523086, 0.014648454322014004]
+    amplify_mean_margin_delta: -0.004882800101768225
+    amplify_ci95: [-0.014648429700173438, 0.004882832814473659]
+  structural_controls_reverse:
+    q13h2: -0.01464844198198989
+    q14h1: -0.02050781826255843
+    q14h3: 0.05957031872821972
+    q15h2: -0.01757811987772584
+  interpretation:
+    - "Q14/H2 remains a reproducible within-transition marker."
+    - "The frozen mean query direction is not a strong single-head causal control coordinate under the declared final-prompt-token intervention."
+    - "Q14/H3 is not promoted from a control to a causal discovery."
+    - "Broaden from literal head identity to normalized-depth and late-query subspace transfer tests."
+    - "Strongest programme evidence remains E2_ACCESSIBILITY_SHIFT_SUPPORTED."
+  remaining_wp05_obligation: "Validate frozen layer13/Q14H2 signature on a future independent CONFIRMED_TRANSITION."
