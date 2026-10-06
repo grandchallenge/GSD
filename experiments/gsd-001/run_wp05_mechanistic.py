@@ -90,12 +90,10 @@ def percentile_rank(values, value) -> float:
 
 
 def apply_head_norm(norm, projected, n_heads: int, head_dim: int):
-    import torch
-    shape = projected.shape
-    x = projected.reshape(*shape[:-1], n_heads, head_dim)
     if norm is not None:
-        x = norm(x)
-    return x
+        projected = norm(projected)
+    shape = projected.shape
+    return projected.reshape(*shape[:-1], n_heads, head_dim)
 
 
 def collect_internal_means(model, tokenizer, prompts, batch_size: int):
