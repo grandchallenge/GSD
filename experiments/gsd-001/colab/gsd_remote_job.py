@@ -182,6 +182,11 @@ def main() -> int:
                 "--output-dir", str(run_root),
                 "--batch-size", str(int(job.get("batch_size", 4))),
             ]
+        elif workload == "gsd_wp05u_directional_causal":
+            argv = [
+                sys.executable, str(source / "run_wp05u_directional_causal.py"),
+                "--output-dir", str(run_root),
+            ]
         elif workload == "gsd_wp06_r0_context_recovery":
             argv = [
                 sys.executable, str(source / "run_wp06_r0_batch.py"),
