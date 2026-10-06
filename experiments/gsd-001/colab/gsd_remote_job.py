@@ -206,6 +206,11 @@ def main() -> int:
                 sys.executable, str(source / "run_wp06_r3_control_repair.py"),
                 "--output-dir", str(run_root),
             ]
+        elif workload == "gsd_wp06_r4_continued_training_recovery":
+            argv = [
+                sys.executable, str(source / "run_wp06_r4_continued.py"),
+                "--output-dir", str(run_root),
+            ]
         else:
             families = list(job.get("families", ["intuitive_answer"]))
             if not families:
