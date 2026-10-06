@@ -16,3 +16,10 @@ def test_scale_sweep_model_argument_is_wired():
     text = (ROOT / "colab/gsd_remote_job.py").read_text()
     assert 'job.get("model"' in text
     assert '"--model"' in text
+
+
+def test_stable_controls_model_argument_is_wired():
+    text = (ROOT / "colab/gsd_remote_job.py").read_text()
+    branch = text.split('if workload == "gsd_wp02_stable_controls":', 1)[1].split('elif workload ==', 1)[0]
+    assert '"--model"' in branch
+    assert 'job.get("model"' in branch
