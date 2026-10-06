@@ -176,6 +176,12 @@ def main() -> int:
             ]
             for revision in revisions:
                 argv += ["--revision", revision]
+        elif workload == "gsd_wp05_mechanistic_operator_localization":
+            argv = [
+                sys.executable, str(source / "run_wp05_mechanistic.py"),
+                "--output-dir", str(run_root),
+                "--batch-size", str(int(job.get("batch_size", 4))),
+            ]
         elif workload == "gsd_wp06_r0_context_recovery":
             argv = [
                 sys.executable, str(source / "run_wp06_r0_batch.py"),

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "experiment_id": "GSD-WP05-MECHANISTIC-OPERATOR-A100-001",
+  "workload": "gsd_wp05_mechanistic_operator_localization",
+  "resource": {"variant": "GPU", "accelerator": "A100"},
+  "remote_timeout_seconds": 14400,
+  "scientific_backend": "transformers_bfloat16_hidden_qk_diagnostics_v1",
+  "scientific_execution_authorized": true,
+  "revisions": [
+    "stage1-step2000-tokens5B",
+    "stage1-step3000-tokens7B",
+    "stage1-step4000-tokens9B"
+  ],
+  "protocol": "experiments/gsd-001/WP05_PROTOCOL.md",
+  "task": "truthy_answer/surprising_truth",
+  "discovery_rows": "0-63",
+  "evaluation_rows": "64-127",
+  "fresh_holdout_claim": false,
+  "cross_transition_predictive_claim": false,
+  "batch_size": 4
+}
