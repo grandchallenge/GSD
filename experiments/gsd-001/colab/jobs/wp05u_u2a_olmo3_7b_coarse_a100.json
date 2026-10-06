@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "experiment_id": "GSD-WP05U-U2A-OLMO3-7B-COARSE-A100-001",
+  "workload": "gsd_wp05u_7b_behaviour_scan",
+  "resource": {"variant": "GPU", "accelerator": "A100"},
+  "remote_timeout_seconds": 14400,
+  "scientific_execution_authorized": true,
+  "model": "allenai/Olmo-3-1025-7B",
+  "revisions": [
+    "stage1-step0",
+    "stage1-step282000",
+    "stage1-step565000",
+    "stage1-step705000",
+    "stage1-step846000",
+    "stage1-step1130000",
+    "stage1-step1413814"
+  ],
+  "families": ["truthy_answer"],
+  "n_seeds": 1,
+  "max_eval": 64,
+  "protocol": "experiments/gsd-001/WP05U_7B_TRANSFER_PILOT_PROTOCOL.md",
+  "claim_boundary": "coarse 7B behavioural discovery only; any reversal requires existing WP03 confirmation contract"
+}
