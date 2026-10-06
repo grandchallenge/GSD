@@ -5,9 +5,9 @@ issue: 1
 branch: "main"
 protected_plan: "governance/GSD-001_RESEARCH_PROGRAMME.md"
 scope: ["GSD-WP00", "GSD-WP01", "GSD-WP02", "GSD-WP03"]
-state: "G1_OPEN__WP06_R3_PARAMETER_LIGHT_RECOVERY__E2_ACCESSIBILITY"
-current_frontier: "WP06_R4_CONTINUED_TRAINING_RECOVERY"
-next_action: "Freeze WP06 R4 continued-training recovery under a new preregistration. Treat all 287 surprising_truth test rows as previously consumed; do not describe any of them as a fresh holdout. Preserve the R3 parameter-light recovery / persistence-unresolved boundary."
+state: "G2_OPEN__WP06_CLOSED_E2__R4_GENERIC_DAMAGE"
+current_frontier: "WP05_MECHANISTIC_OPERATOR_LOCALIZATION"
+next_action: "Execute WP05 mechanistic/operator localization on the confirmed surprising_truth transition, preserving the WP06 E2 evidence ceiling. WP04 remains blocked on absent optimizer artifacts; WP07 and targeted scale replication are unlocked by G2 but remain downstream of the ordered WP05 frontier."
 completion_gates:
   WP00:
     - "exact external source identities recorded"
@@ -347,3 +347,57 @@ wp06_r4_entry:
   prerequisite: "New frozen preregistration required."
   data_boundary: "No surprising_truth test row remains fresh."
   claim_boundary: "Substantial retraining cannot by itself establish persistence."
+
+wp06_r4:
+  receipt: "experiments/gsd-001/receipts/WP06_R4_CONTINUED_TRAINING_A100_RECEIPT.md"
+  protocol: "experiments/gsd-001/WP06_R4_PROTOCOL.md"
+  experiment_id: "GSD-WP06-R4-CONTINUED-TRAINING-A100-001"
+  source_commit: "ae4c38e59363ebb552463759c16c829be5826aea"
+  run_id: "20261006T082807Z-2169"
+  engineering_status: "GREEN_ENGINEERING"
+  hardware: "NVIDIA A100-SXM4-40GB"
+  disposition: "R4_GENERIC_DAMAGE"
+  data_boundary:
+    training_rows: "128-191"
+    evaluation_rows: "192-255"
+    fresh_holdout_claim: false
+    all_surprising_truth_rows_previously_consumed: true
+  recovery:
+    factual_recovery_seeds: "3/3"
+    first_recovery_step: 2
+    answer_tokens_processed_at_recovery: 4
+    trainable_parameters: 1484916736
+    pattern_selected_generalizing_seeds: "0/3"
+  control_gate:
+    sentiment_resolved_degradation_seeds: "0/3"
+    language_model_resolved_degradation_seeds: "0/3"
+    arithmetic_resolved_degradation_seeds: "3/3"
+    arithmetic_mean_delta_range: "-0.01404_to_-0.01119"
+    interpretation: "small but statistically resolved arithmetic regression at the first recovery point"
+  claim_boundary:
+    - "Fast full-model recovery does not establish persistence."
+    - "R4 fails its strict conventional-capability gate."
+    - "No E3 persistence promotion."
+    - "No E4 mechanism-change claim."
+
+wp06_closure:
+  state: "CLOSED"
+  strongest_evidence_level: "E2_ACCESSIBILITY_SHIFT_SUPPORTED"
+  strongest_low_cost_reconstruction: "R3_PARAMETER_LIGHT_RECOVERY__PERSISTENCE_UNRESOLVED"
+  r4_disposition: "R4_GENERIC_DAMAGE"
+  mechanism_persistence_supported: false
+  mechanism_change_supported: false
+  summary:
+    - "R0: zero-shot factual instruction restores behaviour, supporting accessibility/expression shift."
+    - "R1: broad residual patch strongly shifts behaviour but fails held-out confirmation."
+    - "R2: no single tested late attention/MLP contribution recovers."
+    - "R3/R3C: 4096-parameter, 32-step recovery is robust and control-preserving, but rapid relearning is not excluded."
+    - "R4: full-model factual continuation recovers in 2 steps / 4 answer tokens, but incurs a small resolved arithmetic-control regression."
+
+gate_g2:
+  state: "OPEN"
+  basis: "WP06 classifies the confirmed transition above E0 at E2."
+  unlocks:
+    - "GSD-WP07"
+    - "targeted OLMo3 7B/32B replication"
+  ordered_next_frontier: "GSD-WP05"
