@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "experiment_id": "GSD-WP06-R3C-CONTROL-GATE-REPAIR-L4-001",
+  "workload": "gsd_wp06_r3_control_gate_repair",
+  "resource": {
+    "variant": "GPU",
+    "accelerator": "L4"
+  },
+  "remote_timeout_seconds": 14400,
+  "scientific_backend": "transformers_bfloat16_rank1_lora_control_repair_v1",
+  "scientific_execution_authorized": true,
+  "revisions": [
+    "stage1-step4000-tokens9B"
+  ],
+  "candidate_pairs": [
+    {
+      "task": "truthy_answer/surprising_truth",
+      "from": "stage1-step0-tokens0B",
+      "to": "stage1-step2000-tokens5B"
+    },
+    {
+      "task": "truthy_answer/surprising_truth",
+      "from": "stage1-step2000-tokens5B",
+      "to": "stage1-step4000-tokens9B"
+    },
+    {
+      "task": "truthy_answer/common_misconception",
+      "from": "stage1-step0-tokens0B",
+      "to": "stage1-step2000-tokens5B"
+    }
+  ],
+  "confirmation_rule": {
+    "control_ok_required": true,
+    "token_boundary_fallback_allowed": false,
+    "prompt_attack_variants_all_must_match_endpoint_states": true,
+    "independent_replay_min_seeds": 3,
+    "independent_replay_total_seeds": 4,
+    "flanks_supplementary_only": true
+  },
+  "claim_boundary": {
+    "control_gate_repair_only": true,
+    "truthy_reserve_evaluated": false,
+    "persistence_claim": false,
+    "rapid_relearning_excluded": false
+  },
+  "boundary_contract": {
+    "protocol": "experiments/gsd-001/WP03_BOUNDARY_REPAIR_PROTOCOL.md",
+    "canonical_mode": "stable_prompt_space",
+    "repair_mode": "forced_separate_continuation",
+    "retokenization_forbidden": true,
+    "exact_token_id_match_required": true
+  },
+  "protocol": "experiments/gsd-001/WP06_R3_CONTROL_REPAIR_PROTOCOL.md",
+  "intervention": {
+    "reproduce_treatment_adapters_only": true,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "module": "layer12.self_attn.o_proj",
+    "rank": 1,
+    "alpha": 1,
+    "steps_per_adapter": 32,
+    "control_n": 128,
+    "controls": [
+      "sentiment",
+      "arithmetic",
+      "language_model"
+    ],
+    "reserve_reuse_forbidden": true
+  }
+}
