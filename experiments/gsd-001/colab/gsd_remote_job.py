@@ -146,6 +146,7 @@ def main() -> int:
             argv = [
                 sys.executable, str(source / "run_controls_batch.py"),
                 "--output-dir", str(run_root),
+                "--model", str(job.get("model", "allenai/OLMo-2-0425-1B-early-training")),
                 "--max-eval", str(int(job.get("max_eval", 128))),
                 "--sentiment-demo-k", str(int(job.get("sentiment_demo_k", 16))),
             ]
