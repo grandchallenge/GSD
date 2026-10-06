@@ -96,12 +96,9 @@ def install_lora(model, *, seed: int):
     return lora
 
 
-def differentiable_sequence_scores(model, records, indices):
+def differentiable_sequence_scores(model, records, indices, pad_id):
     import torch
 
-    pad_id = model.config.pad_token_id
-    if pad_id is None:
-        raise RuntimeError("model config must expose pad_token_id")
     input_ids, attention_mask = collate(records, indices, pad_id)
     outputs = model(
         input_ids=input_ids,
@@ -131,6 +128,7 @@ def train_adapter(
     *,
     seed: int,
     reversed_objective: bool,
+    pad_id: int,
 ):
     import torch
     import torch.nn.functional as F
@@ -154,7 +152,7 @@ def train_adapter(
             indices.extend([2 * item, 2 * item + 1])
 
         optimizer.zero_grad(set_to_none=True)
-        seq_scores = differentiable_sequence_scores(model, records, indices)
+        seq_scores = differentiable_sequence_scores(model, records, indices, pad_id)
         correct = seq_scores[0::2]
         incorrect = seq_scores[1::2]
         margin = correct - incorrect
@@ -305,6 +303,9 @@ def main() -> None:
         raise RuntimeError(f"R3 frozen contract requires 287 test rows, got {len(tests)}")
 
     source_tokenizer = load_tokenizer(args.model, SOURCE)
+    pad_id = source_tokenizer.pad_token_id
+    if pad_id is None:
+        raise RuntimeError("tokenizer must expose a pad token")
     prompts, correct, incorrect = build_base_k8_prompts(demos, tests, seed=0)
     records, truth_modes = make_records(
         source_tokenizer,
@@ -341,7 +342,7 @@ def main() -> None:
         records,
         reserve_indices,
         batch_size=2,
-        pad_id=source_model.config.pad_token_id,
+        pad_id=pad_id,
     )
     source_reserve = summarize(source_reserve_scores, RESERVE_ITEMS)
     del source_model
@@ -367,7 +368,7 @@ def main() -> None:
         records,
         reserve_indices,
         batch_size=2,
-        pad_id=base_model.config.pad_token_id,
+        pad_id=pad_id,
     )
     target_reserve = summarize(base_reserve_scores, RESERVE_ITEMS)
     base_sentiment = score_control_family(base_model, sentiment_records)
@@ -404,6 +405,7 @@ def main() -> None:
                 records,
                 seed=seed,
                 reversed_objective=reversed_objective,
+                pad_id=pad_id,
             )
 
             reserve_scores = score_plain(
@@ -411,7 +413,7 @@ def main() -> None:
                 records,
                 reserve_indices,
                 batch_size=2,
-                pad_id=model.config.pad_token_id,
+                pad_id=pad_id,
             )
             reserve = summarize(reserve_scores, RESERVE_ITEMS)
 
