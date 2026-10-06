@@ -5,9 +5,9 @@ issue: 1
 branch: "main"
 protected_plan: "governance/GSD-001_RESEARCH_PROGRAMME.md"
 scope: ["GSD-WP00", "GSD-WP01", "GSD-WP02", "GSD-WP03"]
-state: "G1_OPEN__WP06_R2_NO_RECOVERY__E2_ACCESSIBILITY"
-current_frontier: "WP06_R3_PARAMETER_LIGHT_RECOVERY"
-next_action: "Freeze WP06 R3 parameter-light recovery under a new preregistration, using only the still-untouched rows 256-286 for fresh confirmation where applicable. Preserve R0-R2 negative/positive boundaries without post-hoc relaxation."
+state: "G1_OPEN__WP06_R3_PARAMETER_LIGHT_RECOVERY__E2_ACCESSIBILITY"
+current_frontier: "WP06_R4_CONTINUED_TRAINING_RECOVERY"
+next_action: "Freeze WP06 R4 continued-training recovery under a new preregistration. Treat all 287 surprising_truth test rows as previously consumed; do not describe any of them as a fresh holdout. Preserve the R3 parameter-light recovery / persistence-unresolved boundary."
 completion_gates:
   WP00:
     - "exact external source identities recorded"
@@ -296,3 +296,54 @@ wp06_r3_entry:
   prerequisite: "New frozen preregistration required."
   fresh_confirmation_rows: "256-286"
   claim_boundary: "R3 is ambiguous between persistence and rapid relearning and requires matched controls."
+
+wp06_r3:
+  receipt: "experiments/gsd-001/receipts/WP06_R3_PARAMETER_LIGHT_RECOVERY_L4_RECEIPT.md"
+  protocol: "experiments/gsd-001/WP06_R3_PROTOCOL.md"
+  experiment_id: "GSD-WP06-R3-PARAMETER-LIGHT-RECOVERY-L4-001"
+  source_commit: "d0a06aebd73fb7b28b9015d4ae0ad50ac7e5e110"
+  run_id: "20261006T074410Z-1718"
+  engineering_status: "GREEN_ENGINEERING"
+  frozen_disposition: "R3_BASELINE_UNRESOLVED"
+  primary_signal:
+    reserve_rows: "256-286"
+    source_state: "GENERALIZING"
+    target_state: "PATTERN_MATCHING"
+    treatment_generalizing: "3/3"
+    reversed_control_generalizing: "0/3"
+    trainable_parameters: 4096
+    trainable_fraction: 2.7583962132736783e-06
+    steps_per_adapter: 32
+  control_gate_issue:
+    cause: "32-item arithmetic baseline was UNCERTAIN before adaptation."
+    truthy_reserve_consumed: true
+  claim_boundary:
+    - "Primary parameter-light recovery signal is strong but original control gate was unresolved."
+    - "Rapid relearning remains a viable explanation."
+
+wp06_r3c:
+  receipt: "experiments/gsd-001/receipts/WP06_R3C_CONTROL_GATE_REPAIR_L4_RECEIPT.md"
+  protocol: "experiments/gsd-001/WP06_R3_CONTROL_REPAIR_PROTOCOL.md"
+  experiment_id: "GSD-WP06-R3C-CONTROL-GATE-REPAIR-L4-001"
+  source_commit: "7ea44b1b0a2c01f8ee6995d5a97037b4b9be5300"
+  run_id: "20261006T075704Z-1966"
+  engineering_status: "GREEN_ENGINEERING"
+  disposition: "R3_CONTROL_GATE_REPAIRED"
+  truthy_reserve_evaluated: false
+  adapter_reproduction: "3/3"
+  conventional_control_ok: "3/3"
+  combined_r3_interpretation: "R3_PARAMETER_LIGHT_RECOVERY__PERSISTENCE_UNRESOLVED"
+  strongest_evidence_level: "E2_ACCESSIBILITY_SHIFT_SUPPORTED"
+  claim_boundary:
+    - "A 4096-parameter, 32-step adapter robustly restores behaviour on the consumed final reserve."
+    - "Matched reversed-label controls move behaviour in the opposite direction."
+    - "Reproduced treatment adapters show zero resolved degradation across 128-item sentiment, arithmetic, and language-model controls."
+    - "R3 does not distinguish latent recovery from rapid relearning."
+    - "No E3 persistence promotion."
+    - "All 287 surprising_truth test rows are now previously consumed."
+
+wp06_r4_entry:
+  objective: "Measure continued-training recovery cost and curve under matched controls."
+  prerequisite: "New frozen preregistration required."
+  data_boundary: "No surprising_truth test row remains fresh."
+  claim_boundary: "Substantial retraining cannot by itself establish persistence."
