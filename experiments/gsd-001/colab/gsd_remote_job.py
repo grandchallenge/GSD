@@ -188,6 +188,17 @@ def main() -> int:
                 sys.executable, str(source / "run_wp05u_directional_causal.py"),
                 "--output-dir", str(run_root),
             ]
+        elif workload == "gsd_wp05u_7b_candidate_confirmation":
+            argv = [
+                sys.executable, str(source / "run_wp05u_7b_confirmation.py"),
+                "--model", str(job.get("model", "allenai/Olmo-3-1025-7B")),
+                "--output-dir", str(run_root),
+                "--max-eval", str(int(job.get("max_eval", 128))),
+                "--seeds", *[str(x) for x in job.get("seeds", [0, 1, 2, 3])],
+                "--variants", *list(job.get("variants", [
+                    "instruction_prefix", "expanded_markers", "double_newline"
+                ])),
+            ]
         elif workload == "gsd_wp06_r0_context_recovery":
             argv = [
                 sys.executable, str(source / "run_wp06_r0_batch.py"),
