@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "experiment_id": "GSD-WP05U-U2C-OLMO3-7B-ADVERSARIAL-A100-001",
+  "workload": "gsd_wp05u_7b_candidate_confirmation",
+  "resource": {"variant": "GPU", "accelerator": "A100"},
+  "remote_timeout_seconds": 14400,
+  "scientific_execution_authorized": true,
+  "model": "allenai/Olmo-3-1025-7B",
+  "revisions": ["stage1-step565000", "stage1-step705000"],
+  "task": "truthy_answer/surprising_truth",
+  "max_eval": 128,
+  "seeds": [0, 1, 2, 3],
+  "variants": ["instruction_prefix", "expanded_markers", "double_newline"],
+  "protocol": "experiments/gsd-001/WP05U_7B_CONFIRM_ADVERSARIAL_PROTOCOL.md",
+  "control_receipt": "experiments/gsd-001/receipts/WP05U_U2B_OLMO3_7B_CONTROLS_A100_RECEIPT.md",
+  "claim_boundary": "7B endpoint adversarial confirmation only; no mechanistic or transfer claim"
+}
