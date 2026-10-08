@@ -187,6 +187,9 @@ def train_microcontinuation(model, sequences, *, seed: int):
     random.seed(seed)
     model.train()
     model.config.use_cache = False
+    # Recompute activations in backward instead of retaining the 4096-token graph.
+    # This changes the memory schedule, not the frozen token/optimizer contract.
+    model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
     opt = make_optimizer(model)
     losses = []
     index = 0
