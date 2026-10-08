@@ -43,3 +43,12 @@ def test_wp07a_script_freezes_training_budget_and_markers():
     assert "layer_hidden = 13" in text
     assert "layer_q = 14" in text
     assert "head = 2" in text
+
+
+def test_wp07a_capture_hooks_accept_keyword_hidden_states():
+    text = (ROOT / "run_wp07a_source_class_attribution.py").read_text()
+    assert "def hidden_hook(_module, inputs, kwargs):" in text
+    assert "def q_pre_hook(module, inputs, kwargs):" in text
+    assert text.count('kwargs.get("hidden_states")') == 2
+    assert "register_forward_pre_hook(hidden_hook, with_kwargs=True)" in text
+    assert "register_forward_pre_hook(q_pre_hook, with_kwargs=True)" in text
