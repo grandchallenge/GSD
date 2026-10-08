@@ -71,12 +71,12 @@ def targeted_means(model, tokenizer, prompts, batch_size: int = 4):
         captured_hidden = []
         captured_q = []
 
-        def hidden_hook(_module, inputs):
-            h = inputs[0]
+        def hidden_hook(_module, inputs, kwargs):
+            h = kwargs.get("hidden_states") if "hidden_states" in kwargs else inputs[0]
             captured_hidden.append(h)
 
-        def q_pre_hook(module, inputs):
-            h = inputs[0]
+        def q_pre_hook(module, inputs, kwargs):
+            h = kwargs.get("hidden_states") if "hidden_states" in kwargs else inputs[0]
             q = module.q_proj(h)
             q_norm = getattr(module, "q_norm", None)
             if q_norm is not None:
@@ -86,8 +86,8 @@ def targeted_means(model, tokenizer, prompts, batch_size: int = 4):
             q = q.reshape(*q.shape[:-1], n_heads, head_dim)
             captured_q.append(q)
 
-        h_handle = model.model.layers[layer_hidden].register_forward_pre_hook(hidden_hook)
-        q_handle = model.model.layers[layer_q].self_attn.register_forward_pre_hook(q_pre_hook)
+        h_handle = model.model.layers[layer_hidden].register_forward_pre_hook(hidden_hook, with_kwargs=True)
+        q_handle = model.model.layers[layer_q].self_attn.register_forward_pre_hook(q_pre_hook, with_kwargs=True)
         try:
             with torch.inference_mode():
                 model(input_ids=ids, attention_mask=mask, use_cache=False)
