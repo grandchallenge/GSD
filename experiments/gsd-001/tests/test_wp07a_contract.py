@@ -52,3 +52,12 @@ def test_wp07a_capture_hooks_accept_keyword_hidden_states():
     assert text.count('kwargs.get("hidden_states")') == 2
     assert "register_forward_pre_hook(hidden_hook, with_kwargs=True)" in text
     assert "register_forward_pre_hook(q_pre_hook, with_kwargs=True)" in text
+
+
+def test_wp07a_memory_repair_preserves_frozen_training_contract():
+    text = (ROOT / "run_wp07a_source_class_attribution.py").read_text()
+    assert 'gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})' in text
+    assert "MICROBATCH = 2" in text
+    assert "GRAD_ACCUM = 4" in text
+    assert "OPT_STEPS = 8" in text
+    assert "SEQ_LEN = 4096" in text
