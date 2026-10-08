@@ -82,6 +82,7 @@ def test_prompt_failure():
         replay_endpoint_states=_replay(4),
     )
     assert out["disposition"] == PROMPT_RISK
+    assert out["replay_support"] == 4
 
 
 def test_independent_replay_failure():
