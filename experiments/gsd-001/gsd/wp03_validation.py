@@ -42,6 +42,9 @@ def validate_candidate(
         }
 
     expected = (spec.from_state, spec.to_state)
+    replay_support = sum(
+        1 for states in replay_endpoint_states.values() if states == expected
+    )
     prompt_failures = {
         name: states
         for name, states in variant_endpoint_states.items()
@@ -51,13 +54,10 @@ def validate_candidate(
         return {
             "disposition": PROMPT_RISK,
             "prompt_failures": prompt_failures,
-            "replay_support": 0,
+            "replay_support": replay_support,
             "required_replay_support": min_replay_seeds,
         }
 
-    replay_support = sum(
-        1 for states in replay_endpoint_states.values() if states == expected
-    )
     if replay_support < min_replay_seeds:
         return {
             "disposition": REPLAY_FAIL,
