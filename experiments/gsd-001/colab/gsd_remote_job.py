@@ -199,6 +199,12 @@ def main() -> int:
                     "instruction_prefix", "expanded_markers", "double_newline"
                 ])),
             ]
+        elif workload == "gsd_wp07a_source_class_attribution":
+            argv = [
+                sys.executable, str(source / "run_wp07a_source_class_attribution.py"),
+                "--output-dir", str(run_root),
+                "--batch-size", str(int(job.get("batch_size", 4))),
+            ]
         elif workload == "gsd_wp06_r0_context_recovery":
             argv = [
                 sys.executable, str(source / "run_wp06_r0_batch.py"),
