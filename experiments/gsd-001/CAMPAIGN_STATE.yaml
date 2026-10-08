@@ -5,9 +5,9 @@ issue: 1
 branch: "main"
 protected_plan: "governance/GSD-001_RESEARCH_PROGRAMME.md"
 scope: ["GSD-WP00", "GSD-WP01", "GSD-WP02", "GSD-WP03"]
-state: "G2_OPEN__WP05U_U1_NO_CAUSAL_EFFECT__E2_ACCESSIBILITY"
-current_frontier: "WP05_TRANSFER_SUBSPACE_AND_WP07_ATTRIBUTION"
-next_action: "Treat Q14/H2 as a validated within-transition marker but not a demonstrated single-head causal lever. Preserve the frozen layer-13/Q14H2 signature for the next independent CONFIRMED_TRANSITION; broaden transfer tests to normalized-depth/late-query subspaces; couple WP07 data attribution to behavioural and internal-state movement; targeted 7B/32B replication remains unlocked. Do not promote unconfirmed catalogue candidates merely to satisfy WP05."
+state: "G2_OPEN__WP05U_7B_PROMPT_SENSITIVE__E2_ACCESSIBILITY"
+current_frontier: "WP07_ATTRIBUTION_AND_INDEPENDENT_TRANSITION_SOURCE"
+next_action: "Preserve Q14/H2 only as a validated within-transition marker. The frozen OLMo3 7B 565k-to-705k candidate is PROMPT_SENSITIVE_UNCONFIRMED despite exact boundaries, stable controls, and 4/4 base replay, so it cannot satisfy WP05. Do not mine the already-seen 7B coarse trajectory post hoc. Proceed through the independently unlocked WP07 attribution lane and/or a new preregistered independent transition source; if a new CONFIRMED_TRANSITION appears, test normalized-depth/late-query subspace transfer before literal head identity."
 completion_gates:
   WP00:
     - "exact external source identities recorded"
@@ -477,4 +477,67 @@ wp05u_u1:
     - "Q14/H3 is not promoted from a control to a causal discovery."
     - "Broaden from literal head identity to normalized-depth and late-query subspace transfer tests."
     - "Strongest programme evidence remains E2_ACCESSIBILITY_SHIFT_SUPPORTED."
+  remaining_wp05_obligation: "Validate frozen layer13/Q14H2 signature on a future independent CONFIRMED_TRANSITION."
+
+
+wp05u_u2a:
+  protocol: "experiments/gsd-001/WP05U_7B_TRANSFER_PILOT_PROTOCOL.md"
+  receipt: "experiments/gsd-001/receipts/WP05U_U2A_OLMO3_7B_COARSE_A100_RECEIPT.md"
+  experiment_id: "GSD-WP05U-U2A-OLMO3-7B-COARSE-A100-001"
+  run_id: "20261006T112214Z-3745"
+  engineering_status: "GREEN_ENGINEERING"
+  hardware: "NVIDIA A100-SXM4-40GB"
+  model: "allenai/Olmo-3-1025-7B"
+  disposition: "7B_CANDIDATE_TRANSITION"
+  frozen_candidate:
+    from_revision: "stage1-step565000"
+    from_state: "PATTERN_MATCHING"
+    to_revision: "stage1-step705000"
+    to_state: "GENERALIZING"
+  claim_boundary: "Discovery only; not a confirmed transition."
+
+wp05u_u2b:
+  protocol: "experiments/gsd-001/WP05U_7B_CONFIRM_CONTROL_PROTOCOL.md"
+  receipt: "experiments/gsd-001/receipts/WP05U_U2B_OLMO3_7B_CONTROLS_A100_RECEIPT.md"
+  experiment_id: "GSD-WP05U-U2B-OLMO3-7B-STABLE-CONTROLS-A100-001"
+  green_run_id: "20261006T234939Z-26179"
+  green_source_commit: "0ad0603045f235bddbeb7a32ce89b40bb25979de"
+  engineering_status: "GREEN_ENGINEERING"
+  disposition: "7B_ENDPOINT_CONTROLS_PASS"
+  control_ok: true
+  resolved_conventional_degradation_count: "0/3"
+  failed_execution_preserved:
+    run_id: "20261006T234457Z-23691"
+    source_commit: "ebd4681e1815a3d7f0285cc4ce2bc090b38fae8c"
+    status: "RED_ENGINEERING"
+    cause: "Stable-controls dispatcher omitted the explicit 7B model argument and attempted the frozen revisions against the 1B default repository."
+  claim_boundary: "Conventional-capability gate only; no transition or mechanism claim."
+
+wp05u_u2c:
+  protocol: "experiments/gsd-001/WP05U_7B_CONFIRM_ADVERSARIAL_PROTOCOL.md"
+  receipt: "experiments/gsd-001/receipts/WP05U_U2C_OLMO3_7B_ADVERSARIAL_A100_RECEIPT.md"
+  experiment_id: "GSD-WP05U-U2C-OLMO3-7B-ADVERSARIAL-A100-001"
+  run_id: "20261008T123525Z-7752"
+  source_commit: "f3ddbb5028a8df2d26c387bcfd82c4ab62ad193a"
+  engineering_status: "GREEN_ENGINEERING"
+  hardware: "NVIDIA A100-SXM4-40GB"
+  disposition: "PROMPT_SENSITIVE_UNCONFIRMED"
+  exact_boundary: true
+  inherited_control_ok: true
+  independent_base_replay_support: "4/4"
+  prompt_variants:
+    double_newline: "PATTERN_MATCHING_TO_GENERALIZING"
+    expanded_markers: "PATTERN_MATCHING_TO_UNCERTAIN"
+    instruction_prefix: "UNCERTAIN_TO_GENERALIZING"
+  accounting_repair:
+    defect: "Prompt-risk early return reported replay_support=0 despite raw 4/4 endpoint replay."
+    repair_commit: "045ed50b67c3b10b67fa030821e5083c594b8a53"
+    tested_head: "4796e2a013f80a67d23f47fa877564171e4a5505"
+    corrected_replay_support: "4/4"
+    disposition_changed: false
+  interpretation:
+    - "The canonical 7B reversal is exact-boundary, control-preserving, and seed-stable."
+    - "It fails the frozen prompt-robustness contract and is not a CONFIRMED_TRANSITION."
+    - "It cannot be used to satisfy the WP05 cross-transition transfer gate."
+    - "Do not mine the already-seen coarse 7B trajectory post hoc."
   remaining_wp05_obligation: "Validate frozen layer13/Q14H2 signature on a future independent CONFIRMED_TRANSITION."
