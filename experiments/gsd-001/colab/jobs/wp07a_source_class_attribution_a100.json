@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "experiment_id": "GSD-WP07A-SOURCE-CLASS-ATTRIBUTION-A100-001",
+  "workload": "gsd_wp07a_source_class_attribution",
+  "resource": {"variant": "GPU", "accelerator": "A100"},
+  "remote_timeout_seconds": 14400,
+  "scientific_execution_authorized": true,
+  "revisions": ["stage1-step2000-tokens5B"],
+  "source_revision": "stage1-step2000-tokens5B",
+  "flank_revision": "stage1-step3000-tokens7B",
+  "task": "truthy_answer/surprising_truth",
+  "training_dataset": "allenai/olmo-mix-1124",
+  "source_classes": [
+    "algebraic-stack",
+    "arxiv",
+    "dclm",
+    "open-web-math",
+    "pes2o",
+    "starcoder",
+    "wiki"
+  ],
+  "training_tokens_per_class": 262144,
+  "discovery_rows": "0-63",
+  "fresh_holdout_claim": false,
+  "batch_size": 4,
+  "protocol": "experiments/gsd-001/WP07A_SOURCE_CLASS_ATTRIBUTION_PROTOCOL.md",
+  "claim_boundary": "source-class attribution discovery only; no exact original-window, held-out attribution, mechanism, E3, or E4 claim"
+}
