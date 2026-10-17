@@ -2,14 +2,8 @@ name: GSD evaluator tests
 
 on:
   pull_request:
-    paths:
-      - "experiments/gsd-001/**"
-      - ".github/workflows/gsd-ci.yml"
   push:
     branches: [main]
-    paths:
-      - "experiments/gsd-001/**"
-      - ".github/workflows/gsd-ci.yml"
 
 permissions:
   contents: read
