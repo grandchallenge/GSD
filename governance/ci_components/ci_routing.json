@@ -1,0 +1,19 @@
+{
+  "contract_id": "GCL-CIR-001",
+  "version": "1.0.0",
+  "component_id": "ci_routing",
+  "owner": "GSD evaluator CI and contract validation",
+  "paths": {
+    "exact": [],
+    "prefixes": [
+      "governance/ci_routing/"
+    ],
+    "test_prefixes": [
+      "experiments/gsd-001/tests/test_gcl_component_"
+    ]
+  },
+  "depends_on": [],
+  "checks": [
+    "gsd-evaluator-tests"
+  ]
+}
