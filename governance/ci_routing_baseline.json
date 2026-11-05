@@ -1,0 +1,37 @@
+{
+  "contract_id": "GCL-CIR-001",
+  "version": "1.0.0",
+  "repository": "grandchallenge/GSD",
+  "mode": "ENFORCE_DISCOVERY_PRESERVE_EXISTING_CI",
+  "checks": [
+    {
+      "id": "gsd-evaluator-tests",
+      "test_globs": [
+        "experiments/gsd-001/tests/test_*.py"
+      ]
+    }
+  ],
+  "legacy_test_paths": [
+    "experiments/gsd-001/tests/test_activation_recovery.py",
+    "experiments/gsd-001/tests/test_checkpoints.py",
+    "experiments/gsd-001/tests/test_colab_status.py",
+    "experiments/gsd-001/tests/test_continued_recovery.py",
+    "experiments/gsd-001/tests/test_control_validation.py",
+    "experiments/gsd-001/tests/test_ingest.py",
+    "experiments/gsd-001/tests/test_parameter_recovery.py",
+    "experiments/gsd-001/tests/test_precision.py",
+    "experiments/gsd-001/tests/test_recovery.py",
+    "experiments/gsd-001/tests/test_scoring.py",
+    "experiments/gsd-001/tests/test_sparse_recovery.py",
+    "experiments/gsd-001/tests/test_transitions.py",
+    "experiments/gsd-001/tests/test_wp03_validation.py",
+    "experiments/gsd-001/tests/test_wp05_contract.py",
+    "experiments/gsd-001/tests/test_wp05u_7b_transfer_contract.py",
+    "experiments/gsd-001/tests/test_wp05u_contract.py",
+    "experiments/gsd-001/tests/test_wp06_r1_contract.py",
+    "experiments/gsd-001/tests/test_wp06_r2_contract.py",
+    "experiments/gsd-001/tests/test_wp06_r3_contract.py",
+    "experiments/gsd-001/tests/test_wp06_r4_contract.py",
+    "experiments/gsd-001/tests/test_wp07a_contract.py"
+  ]
+}
